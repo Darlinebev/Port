@@ -1,59 +1,307 @@
 ﻿@page "/"
+@using DarlineBeverly.Components.Layout
 
 <PageTitle>DarlineBeverly</PageTitle>
 
-<section style="display: flex; align-items: center; justify-content: space-between; padding: 4rem; box-sizing: border-box; background-color: white;">
+
+<section style="display: flex; align-items: center; justify-content: space-between; padding: 2rem; border: 2px solid; border-color:green; border-radius:10px;">
 
   <div style="flex: 1; padding-right: 2rem;">
-    
-    <p style="font-size: 1.2rem; margin-bottom: 2rem;">
-      HI THERE
-    </p>
-    <h1 style="font-size: 3rem; margin-bottom: 1rem;">I Am Darline Beverly</h1>
-    <p>I'm Bev, a software engineer and researcher with a strong focus on web development using .NET and Blazor. My work combines innovation, functionality, and design to deliver performance-driven digital solutions for modern businesses.
-
-    </p>
-    <button style="padding: 1rem 1rem; font-size: 1rem; background-color: #679436; color: white; border: none; border-radius: 10px;">
-      More About Me
-    </button>
+    <h1 style="font-size: 3rem; margin-bottom: 1rem; font-family:aurora;">Darline <br> Beverly</h1>
+    <p>Web Developer | UI/UX Designer | Graphics Designer | Researcher </p>
+    <button onclick="location.href='#portfolio'" style=" padding: 0.5rem 1rem; font-size: 1rem; border: 2px solid green; border-radius: 30px; background-color: transparent; color: green;cursor: pointer;transition: all 0.3s ease;">Portfolio</button>
+      <a href="Darline-Beverly-CV.pdf" download
+      style="display: inline-block; padding: 0.5rem 1rem; font-size: 1rem; font-weight: 600; color: green; border: 2px solid green; border-radius: 30px; text-decoration: none; margin-right: 1rem;">
+      📄 Download My CV
+      </a>
   </div>
 
   <div style="flex: 1; display: flex; justify-content: center;">
-    <img src="/images/atieno.jpg" alt="Hero Image" style="max-width: 100%; height: auto; border-radius: 10px;" />
+    <img src="/images/mypic2.png" alt="Hero Image" style="max-width: 100%; height: auto; border-radius: 10px;" />
   </div>
 </section>
 
+<div class="services-heading">
+  <h2>Services</h2>
+</div>
 
-<section style="padding: 50px 20px; background-color: #ffffff; color: #333;">
-  <!-- Heading -->
-  <h2 style="font-size: 50px; font-weight: bold; margin-bottom: 20px;">About Me</h2>
+<div class="row">
+  @foreach (var src in images)
+  {
+    <div class="image">
+      <img src="@src" alt="image" loading="lazy" />
+    </div>
+  }
+</div>
+<div><h2>Who is Darline Beverly?</h2></div>
 
-  <!-- Paragraph about you -->
-  <p style="font-size: 18px; line-height: 1.6; margin-bottom: 40px;">
-    👋 Hey there! I'm Bev — a driven and detail-obsessed researcher, engineer, and full-stack web developer specializing in .NET and Blazor. I build clean, scalable, and user-friendly web applications that merge technical precision with intuitive design. Whether it's crafting seamless front-end experiences, integrating robust APIs, or optimizing performance under the hood, I thrive on solving real-world problems through code.
-          I believe in building with purpose — tech that works, flows, and grows. Explore my projects and let’s build something remarkable.
-    I'm Bev — a curious, creative, and analytical full-stack web developer with a background in research, engineering, and IT. I specialize in .NET and Blazor, blending beautiful UI/UX design with rock-solid backend logic. Whether it’s building web apps, APIs, or smart systems, I build tools that solve real problems and scale with confidence.
+<section id="about" class="about-section">
+  
+  <div class="about-me">
+    <div class="about-image">
+    <img src="/images/atieno.png" alt="About Me Image">
+  </div>
+  <div class="about-content">
+  <p style="text-alignment: justified;">
+    I'm Bev a full-stack web dev with a creative soul. My toolkit? <strong>.NET, Blazor, C#, UI/UX design, graphics design,</strong> and a sharp mind for <strong>research and problem-solving</strong>. I don’t just build sites I create digital experiences that look sleek, run smooth, and solve real problems.
+  
+    I come from a hybrid background that merges <em>engineering logic</em> with <em>design thinking</em>. That means I care about the frontend beauty and the backend brains. Whether it’s prototyping user flows, building scalable components, or making interfaces that people actually enjoy using I’ve got you.
+    I offer a little bit of everything  <strong>Web Development, UI/UX Design, Graphic Design, and Tech Research</strong>. If it lives on a screen, I probably know how to make it work and make it wow.
   </p>
+ 
+    <a href="Darline-Beverly-CV.pdf" download
+      style="display:inline-block padding; 0.5rem 1rem; font-size: 1rem; font-weight: 600; color: green; border: 2px solid green; border-radius: 30px; text-decoration: none; margin-right: 1rem;text-align:center;">
+      📄 Download My CV
+      </a>
+      
+  </div>
+  </div>
+  
+</section>
 
-  <!-- Container -->
-  <div style="display: flex; flex-wrap: wrap; gap: 30px;">
-    
-    <!-- Column 1: Grid -->
-    <div style="flex: 1; min-width: 250px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
-      <div style="background-color: #f2f2f2; padding: 15px; border-radius: 5px; box-shadow: 1px 1px 5px rgba(0,0,0,0.1);">.NET 8</div>
-      <div style="background-color: #f2f2f2; padding: 15px; border-radius: 5px; box-shadow: 1px 1px 5px rgba(0,0,0,0.1);">Blazor</div>
-      <div style="background-color: #f2f2f2; padding: 15px; border-radius: 5px; box-shadow: 1px 1px 5px rgba(0,0,0,0.1);">EF Core</div>
-      <div style="background-color: #f2f2f2; padding: 15px; border-radius: 5px; box-shadow: 1px 1px 5px rgba(0,0,0,0.1);">C#</div>
-      <div style="background-color: #f2f2f2; padding: 15px; border-radius: 5px; box-shadow: 1px 1px 5px rgba(0,0,0,0.1);">SQLite</div>
-      <div style="background-color: #f2f2f2; padding: 15px; border-radius: 5px; box-shadow: 1px 1px 5px rgba(0,0,0,0.1);">REST APIs</div>
-    </div>
 
-    <!-- Column 2: Paragraph -->
-    <div style="flex: 1; min-width: 250px;">
-      <p style="font-size: 16px; line-height: 1.6;">
-        I thrive in spaces where tech meets purpose — from planning data-driven features to deploying powerful full-stack apps. I’m always leveling up my stack and building tools that help people do things better and faster. Let’s just say: if it runs on code, I’m probably poking around in it.
-      </p>
-    </div>
+<section class="portfolio-preview">
+  <div class="section-header">
+    <h2>Explore My Work</h2>
+    <p>Here’s a taste of what I’ve been cooking 👇</p>
+  </div>
 
+  <div class="card-grid">
+    @foreach (var item in portfolioItems.Take(4)) // just showing top 4
+    {
+      <a href="/portfolio/@item.Slug" class="card">
+        <img src="@item.Image" alt="@item.Title" />
+        <div class="card-body">
+          <h3>@item.Title</h3>
+          <p>@item.Description</p>
+          <span class="tag">@item.Category</span>
+        </div>
+      </a>
+    }
+  </div>
+
+  <div class="view-more">
+    <a href="/portfolio" class="btn">See Full Portfolio</a>
   </div>
 </section>
+
+
+@code {
+   
+    string[] images = new[]
+    {
+        "/images/WebDevelopment.png",
+        "/images/UIDesign.png",
+        "/images/GraphicsDesign.png",
+        "/images/TechnicalResearch.png"
+    };
+     record PortfolioItem(string Title, string Description, string Category, string Image, string Slug);
+
+  List<PortfolioItem> portfolioItems = new()
+  {
+    new("E-commerce Site", "Modern store with real-time updates", "Web Development", "/images/WebDevelopment.png", "ecommerce"),
+    new("UI Redesign", "SaaS dashboard in Figma", "UI/UX", "/images/UIDesign.png", "ui-redesign"),
+    new("Brand Kit", "Logo, typography & business card", "Graphics", "/images/GraphicsDesign.png", "brand-kit"),
+    new("Research Paper", "Accessibility study in fintech", "Research", "/images/TechnicalResearch.png", "fintech-accessibility")
+  };
+}
+
+<style>
+  .row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; 
+    padding: 30px 0;
+    gap: 5px;
+  }
+
+  .image {
+    flex: 1 1 calc(25% - 16px); 
+    max-width: 300px; 
+  }
+
+  .image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 6px;
+    object-fit: cover;
+     transition: transform 0.3s ease;
+  }
+.image img:hover {
+  transform: scale(1.05); 
+  cursor: pointer; 
+  }
+.services-heading {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.services-heading h2 {
+  display: inline-block;
+  font-size: 2rem;
+  position: relative;
+  padding-bottom: 10px;
+  font-weight: bold;
+}
+
+.services-heading h2::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 60px; /* adjust underline width */
+  height: 3px;
+  background-color: #000; /* use your theme color */
+  border-radius: 2px;
+}
+.portfolio-preview {
+  padding: 60px 20px;
+  text-align: center;
+  background-color: #fefefe;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.section-header p {
+  color: #555;
+  font-size: 1rem;
+  margin-bottom: 40px;
+}
+
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+}
+
+.card {
+  width: 250px;
+  text-decoration: none;
+  color: inherit;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+
+.card-body {
+  padding: 16px;
+  text-align: left;
+}
+
+.card-body h3 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.card-body p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.card-body .tag {
+  display: inline-block;
+  margin-top: 10px;
+  background: #007bff;
+  color: white;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.view-more {
+  margin-top: 40px;
+}
+
+.btn {
+  padding: 10px 24px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+.about-me {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 3rem;
+  background-color:none;
+  flex-wrap: wrap; /* For responsiveness */
+}
+
+.about-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.about-image {
+  flex: 1 1 40%;
+}
+
+.about-content {
+  flex: 1 1 55%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.h2{
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+  color: green;
+}
+
+.about-content p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.about-btn {
+  align-self: flex-start;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  color: green;
+  border: 2px solid green;
+  border-radius: 30px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.about-btn:hover {
+  background-color: green;
+  color: white;
+}
+
+</style>

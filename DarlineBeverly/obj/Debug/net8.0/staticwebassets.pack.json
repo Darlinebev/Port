@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets/DarlineBeverly.bundle.scp.css"
     },
     {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/Darline-Beverly-CV .pdf",
+      "PackagePath": "staticwebassets/Darline-Beverly-CV .pdf"
+    },
+    {
       "Id": "/workspaces/Port/DarlineBeverly/wwwroot/app.css",
       "PackagePath": "staticwebassets/app.css"
     },
@@ -21,8 +25,60 @@
       "PackagePath": "staticwebassets/favicon.png"
     },
     {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/GraphicsDesign.png",
+      "PackagePath": "staticwebassets/images/GraphicsDesign.png"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/TechnicalResearch.png",
+      "PackagePath": "staticwebassets/images/TechnicalResearch.png"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/UIDesign.png",
+      "PackagePath": "staticwebassets/images/UIDesign.png"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/WebDevelopment.png",
+      "PackagePath": "staticwebassets/images/WebDevelopment.png"
+    },
+    {
       "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/atieno.jpg",
       "PackagePath": "staticwebassets/images/atieno.jpg"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/atieno.png",
+      "PackagePath": "staticwebassets/images/atieno.png"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/atieno1.jpg",
+      "PackagePath": "staticwebassets/images/atieno1.jpg"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/atieno3.jpg",
+      "PackagePath": "staticwebassets/images/atieno3.jpg"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/background.jpg",
+      "PackagePath": "staticwebassets/images/background.jpg"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/banner1.jpg",
+      "PackagePath": "staticwebassets/images/banner1.jpg"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/banner2.jpg",
+      "PackagePath": "staticwebassets/images/banner2.jpg"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/mypic.png",
+      "PackagePath": "staticwebassets/images/mypic.png"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/mypic2.png",
+      "PackagePath": "staticwebassets/images/mypic2.png"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/portfolio.json",
+      "PackagePath": "staticwebassets/portfolio.json"
     },
     {
       "Id": "obj/Debug/net8.0/staticwebassets/msbuild.DarlineBeverly.Microsoft.AspNetCore.StaticWebAssets.props",
