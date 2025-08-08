@@ -1,0 +1,45 @@
+{
+  "Files": [
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/obj/Debug/net8.0/scopedcss/projectbundle/DarlineBeverly.bundle.scp.css",
+      "PackagePath": "staticwebassets/DarlineBeverly.bundle.scp.css"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/app.css",
+      "PackagePath": "staticwebassets/app.css"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/bootstrap/bootstrap.min.css",
+      "PackagePath": "staticwebassets/bootstrap/bootstrap.min.css"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/bootstrap/bootstrap.min.css.map",
+      "PackagePath": "staticwebassets/bootstrap/bootstrap.min.css.map"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/favicon.png",
+      "PackagePath": "staticwebassets/favicon.png"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/atieno.jpg",
+      "PackagePath": "staticwebassets/images/atieno.jpg"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.DarlineBeverly.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.DarlineBeverly.props",
+      "PackagePath": "build\\DarlineBeverly.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.DarlineBeverly.props",
+      "PackagePath": "buildMultiTargeting\\DarlineBeverly.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.DarlineBeverly.props",
+      "PackagePath": "buildTransitive\\DarlineBeverly.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
