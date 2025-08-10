@@ -1,0 +1,106 @@
+@page "/admin/articles/edit"
+@page "/admin/articles/edit/{Id:int?}"
+@using DarlineBeverly.Components.Pages.Admin
+@inject HttpClient Http
+@inject NavigationManager Nav
+@using Microsoft.AspNetCore.Components.Forms
+@using DarlineBeverly.Models
+@using DarlineBeverly.Dtos
+
+<h3>@(Id.HasValue ? "Edit Article" : "New Article")</h3>
+
+<EditForm Model="model" OnValidSubmit="Save">
+    <InputText @bind-Value="model.Title" placeholder="Title" />
+    <InputText @bind-Value="model.Slug" placeholder="Slug (optional)" />
+    <div>
+        <label>Category</label>
+        <select @bind="model.CategoryId">
+            <option value="">-- none --</option>
+            @foreach (var c in categories) { <option value="@c.Id">@c.Name</option> }
+        </select>
+    </div>
+    <div>
+        <label>Tags (comma separated)</label>
+        <InputText @bind-Value="tagInput" />
+    </div>
+    <div>
+        <label>Content (Markdown)</label>
+        <textarea @bind="model.Content" rows="12"></textarea>
+    </div>
+    <div>
+        <label>Files</label>
+        <InputFile OnChange="OnFilesSelected" multiple />
+        <ul>
+            @foreach (var f in uploadedFiles) { <li>@f.fileName - @f.url</li> }
+        </ul>
+    </div>
+
+    <div>
+        <button type="submit">Save</button>
+        <button type="button" @onclick="Publish">Publish</button>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter] public int? Id { get; set; }
+    private ArticleDto model = new();
+    private string tagInput = "";
+    private List<(string fileName, string url)> uploadedFiles = new();
+    private List<Category> categories = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        categories = await Http.GetFromJsonAsync<List<Category>>("/api/admin/categories") ?? new();
+        if (Id.HasValue)
+        {
+            var article = await Http.GetFromJsonAsync<ArticleDto>($"/api/admin/articles/{Id.Value}");
+            if (article != null) model = article;
+        }
+    }
+
+    private async Task OnFilesSelected(InputFileChangeEventArgs e)
+    {
+        foreach (var f in e.GetMultipleFiles())
+        {
+            var content = new MultipartFormDataContent();
+            var stream = f.OpenReadStream(200_000_000);
+            content.Add(new StreamContent(stream), "file", f.Name);
+            var res = await Http.PostAsync("/api/admin/upload", content);
+            if (res.IsSuccessStatusCode)
+            {
+                var payload = await res.Content.ReadFromJsonAsync<UploadResult>();
+                uploadedFiles.Add((payload!.fileName, payload.url));
+                model.FileUrls.Add(payload.url);
+            }
+        }
+    }
+
+    private async Task Save()
+    {
+        model.TagNames = tagInput.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
+        HttpResponseMessage res;
+        if (Id.HasValue)
+            res = await Http.PutAsJsonAsync($"/api/admin/articles/{Id.Value}", model);
+        else
+            res = await Http.PostAsJsonAsync($"/api/admin/articles", model);
+
+        if (res.IsSuccessStatusCode)
+        {
+            Nav.NavigateTo("/admin/articles");
+        }
+        else
+        {
+            // handle error
+        }
+    }
+
+    private async Task Publish()
+    {
+        model.IsPublished = true;
+        model.PublishedOn = DateTime.UtcNow;
+        await Save();
+    }
+
+    private class UploadResult { public string url { get; set; } = ""; public string fileName { get; set; } = ""; }
+    private class Category { public int Id { get; set; } public string Name { get; set; } = ""; }
+}

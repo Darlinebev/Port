@@ -63,19 +63,20 @@
 <section class="portfolio-preview">
   <div class="section-header">
     <h2>Explore My Work</h2>
-    <p>Here’s a taste of what I’ve been cooking 👇</p>
   </div>
 
   <div class="card-grid">
     @foreach (var item in portfolioItems.Take(4)) // just showing top 4
     {
       <a href="/portfolio/@item.Slug" class="card">
-        <img src="@item.Image" alt="@item.Title" />
+        <img src="@item.Image" alt="@item.Title"/>
         <div class="card-body">
           <h3>@item.Title</h3>
           <p>@item.Description</p>
-          <span class="tag">@item.Category</span>
-        </div>
+          </div>
+          <div class="tag">
+            <p>@item.Category</p>
+          </div>
       </a>
     }
   </div>
@@ -99,10 +100,10 @@
 
   List<PortfolioItem> portfolioItems = new()
   {
-    new("E-commerce Site", "Modern store with real-time updates", "Web Development", "/images/WebDevelopment.png", "ecommerce"),
-    new("UI Redesign", "SaaS dashboard in Figma", "UI/UX", "/images/UIDesign.png", "ui-redesign"),
-    new("Brand Kit", "Logo, typography & business card", "Graphics", "/images/GraphicsDesign.png", "brand-kit"),
-    new("Research Paper", "Accessibility study in fintech", "Research", "/images/TechnicalResearch.png", "fintech-accessibility")
+    new("Web Development", "i develop nice and scalable  websites using blazor and .Net Framework", "View Projects", "/images/design.jpg", "ecommerce"),
+    new("UI/UX Design", "i design user friendly website design with Figma and Adobe XD", "View Projects", "/images/uiux.jpg", "View More"),
+    new("Graphics Design", " I create amazing Logos, typography & business cards and any branding graphics for businesses", "View Projects", "/images/graphics.jpg", "View More"),
+    new("Technical Research", "I do technical reseaarch for businesses and individuals in the fintech field ", "View Projects", "/images/research.jpg", "View More"),
   };
 }
 
@@ -182,6 +183,8 @@
 }
 
 .card {
+  display:flex; 
+  flex-direction:column;
   width: 250px;
   text-decoration: none;
   color: inherit;
@@ -190,6 +193,7 @@
   overflow: hidden;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s, box-shadow 0.3s;
+  padding:10px;
 }
 
 .card:hover {
@@ -219,23 +223,27 @@
   color: #666;
 }
 
-.card-body .tag {
-  display: inline-block;
-  margin-top: 10px;
-  background: #007bff;
+.card .tag {
+  display: flex;
+  justify-content: center; 
+  align-items: center;   
+  background: #015c08ff;
   color: white;
   font-size: 0.75rem;
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 5px 5px 5px 5px;           
+  border-radius: 4px;     
+  transition: background-color 0.3s;
 }
-
+.card .tag p {
+  margin: 0;
+}
 .view-more {
   margin-top: 40px;
 }
 
 .btn {
   padding: 10px 24px;
-  background-color: #007bff;
+  background-color: #085a16ff;
   color: white;
   border-radius: 6px;
   font-weight: bold;
@@ -244,7 +252,7 @@
 }
 
 .btn:hover {
-  background-color: #0056b3;
+  background-color: #0dff35ff;
 }
 .about-me {
   display: flex;

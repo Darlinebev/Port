@@ -1,0 +1,12 @@
+/* wwwroot/css/blog.css */
+.blog-list { max-width: 800px; margin: 0 auto; padding: 1rem; }
+.preview-card { border-bottom: 1px solid #eee; padding: 1rem 0; }
+.preview-card h2 { margin: 0 0 6px 0; }
+.preview-card .meta { font-size: 0.85rem; color: #666; margin-bottom: 6px; }
+.preview-card .excerpt { color: #333; }
+.tag-chip { display: inline-block; background:#015c08; color:#fff; padding:4px 8px; border-radius:4px; font-size:0.75rem; margin-top:6px; }
+.blog-article { max-width: 800px; margin: 0 auto; padding: 2rem; }
+.blog-article .content img { max-width: 100%; height: auto; }
+.admin-table { width: 100%; border-collapse: collapse;}
+.admin-table th, .admin-table td { padding: 8px; border: 1px solid #ddd;}
+.sentinel { text-align:center; padding: 12px; color: #777; }

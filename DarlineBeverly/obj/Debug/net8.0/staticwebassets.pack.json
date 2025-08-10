@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets/app.css"
     },
     {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/blog.css",
+      "PackagePath": "staticwebassets/blog.css"
+    },
+    {
       "Id": "/workspaces/Port/DarlineBeverly/wwwroot/bootstrap/bootstrap.min.css",
       "PackagePath": "staticwebassets/bootstrap/bootstrap.min.css"
     },
@@ -69,6 +73,14 @@
       "PackagePath": "staticwebassets/images/banner2.jpg"
     },
     {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/design.jpg",
+      "PackagePath": "staticwebassets/images/design.jpg"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/graphics.jpg",
+      "PackagePath": "staticwebassets/images/graphics.jpg"
+    },
+    {
       "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/mypic.png",
       "PackagePath": "staticwebassets/images/mypic.png"
     },
@@ -77,8 +89,16 @@
       "PackagePath": "staticwebassets/images/mypic2.png"
     },
     {
-      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/portfolio.json",
-      "PackagePath": "staticwebassets/portfolio.json"
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/research.jpg",
+      "PackagePath": "staticwebassets/images/research.jpg"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/uiux.jpg",
+      "PackagePath": "staticwebassets/images/uiux.jpg"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/js/infinite.js",
+      "PackagePath": "staticwebassets/js/infinite.js"
     },
     {
       "Id": "obj/Debug/net8.0/staticwebassets/msbuild.DarlineBeverly.Microsoft.AspNetCore.StaticWebAssets.props",

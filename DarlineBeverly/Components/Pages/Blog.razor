@@ -1,0 +1,63 @@
+@page "/Blog"
+
+@inject HttpClient Http
+@inject IJSRuntime JS
+
+<link href="css/blog.css" rel="stylesheet" />
+
+<h1>Blog</h1>
+<div class="blog-list">
+    @foreach (var p in Posts)
+    {
+        <article class="preview-card">
+            <h2><a href="/blog/@p.Slug">@p.Title</a></h2>
+            <div class="meta">@p.PublishedOn?.ToLocalTime().ToString("MMM d, yyyy") • @p.Category</div>
+            <p class="excerpt">@p.Excerpt</p>
+            <div class="tag-chip">@string.Join(", ", p.Tags)</div>
+        </article>
+    }
+
+    <div id="infinite-sentinel" class="sentinel">
+        @if (IsLoading) { <p>Loading...</p> }
+        @if (Done) { <p>No more posts.</p> }
+    </div>
+</div>
+
+@code {
+    private List<PostPreview> Posts = new();
+    private int page = 1;
+    private bool IsLoading = false;
+    private bool Done = false;
+    private DotNetObjectReference<Blog>? dotNetRef;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            dotNetRef = DotNetObjectReference.Create(this);
+            await LoadPage(); // load first page
+            await JS.InvokeVoidAsync("initInfiniteScroll", dotNetRef, "infinite-sentinel");
+        }
+    }
+
+    [JSInvokable("LoadPage")]
+    public async Task LoadPage()
+    {
+        if (IsLoading || Done) return;
+        IsLoading = true;
+        var items = await Http.GetFromJsonAsync<List<PostPreview>>($"/api/blog/articles?page={page}&pageSize=6");
+        if (items == null || items.Count == 0)
+        {
+            Done = true;
+        }
+        else
+        {
+            Posts.AddRange(items);
+            page++;
+            StateHasChanged();
+        }
+        IsLoading = false;
+    }
+
+    public record PostPreview(int Id, string Title, string Slug, string Excerpt, DateTime? PublishedOn, string? Category, IEnumerable<string>? Tags);
+}

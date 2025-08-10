@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "GyF/iE5E00c/KFzccxgrpxAqSSQTB9KX9DAy5er5djI=",
+  "Hash": "XOzVZILd4yIdNHp2Tb8zYc6ykIhGuBavC6dYnBITY7I=",
   "Source": "DarlineBeverly",
   "BasePath": "_content/DarlineBeverly",
   "Mode": "Default",
@@ -72,6 +72,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/app.css"
+    },
+    {
+      "Identity": "/workspaces/Port/DarlineBeverly/wwwroot/blog.css",
+      "SourceId": "DarlineBeverly",
+      "SourceType": "Discovered",
+      "ContentRoot": "/workspaces/Port/DarlineBeverly/wwwroot/",
+      "BasePath": "_content/DarlineBeverly",
+      "RelativePath": "blog.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/blog.css"
     },
     {
       "Identity": "/workspaces/Port/DarlineBeverly/wwwroot/bootstrap/bootstrap.min.css",
@@ -283,6 +302,44 @@
       "OriginalItemSpec": "wwwroot/images/banner2.jpg"
     },
     {
+      "Identity": "/workspaces/Port/DarlineBeverly/wwwroot/images/design.jpg",
+      "SourceId": "DarlineBeverly",
+      "SourceType": "Discovered",
+      "ContentRoot": "/workspaces/Port/DarlineBeverly/wwwroot/",
+      "BasePath": "_content/DarlineBeverly",
+      "RelativePath": "images/design.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/design.jpg"
+    },
+    {
+      "Identity": "/workspaces/Port/DarlineBeverly/wwwroot/images/graphics.jpg",
+      "SourceId": "DarlineBeverly",
+      "SourceType": "Discovered",
+      "ContentRoot": "/workspaces/Port/DarlineBeverly/wwwroot/",
+      "BasePath": "_content/DarlineBeverly",
+      "RelativePath": "images/graphics.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/graphics.jpg"
+    },
+    {
       "Identity": "/workspaces/Port/DarlineBeverly/wwwroot/images/GraphicsDesign.png",
       "SourceId": "DarlineBeverly",
       "SourceType": "Discovered",
@@ -340,6 +397,25 @@
       "OriginalItemSpec": "wwwroot/images/mypic2.png"
     },
     {
+      "Identity": "/workspaces/Port/DarlineBeverly/wwwroot/images/research.jpg",
+      "SourceId": "DarlineBeverly",
+      "SourceType": "Discovered",
+      "ContentRoot": "/workspaces/Port/DarlineBeverly/wwwroot/",
+      "BasePath": "_content/DarlineBeverly",
+      "RelativePath": "images/research.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/research.jpg"
+    },
+    {
       "Identity": "/workspaces/Port/DarlineBeverly/wwwroot/images/TechnicalResearch.png",
       "SourceId": "DarlineBeverly",
       "SourceType": "Discovered",
@@ -378,6 +454,25 @@
       "OriginalItemSpec": "wwwroot/images/UIDesign.png"
     },
     {
+      "Identity": "/workspaces/Port/DarlineBeverly/wwwroot/images/uiux.jpg",
+      "SourceId": "DarlineBeverly",
+      "SourceType": "Discovered",
+      "ContentRoot": "/workspaces/Port/DarlineBeverly/wwwroot/",
+      "BasePath": "_content/DarlineBeverly",
+      "RelativePath": "images/uiux.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/uiux.jpg"
+    },
+    {
       "Identity": "/workspaces/Port/DarlineBeverly/wwwroot/images/WebDevelopment.png",
       "SourceId": "DarlineBeverly",
       "SourceType": "Discovered",
@@ -397,12 +492,12 @@
       "OriginalItemSpec": "wwwroot/images/WebDevelopment.png"
     },
     {
-      "Identity": "/workspaces/Port/DarlineBeverly/wwwroot/portfolio.json",
+      "Identity": "/workspaces/Port/DarlineBeverly/wwwroot/js/infinite.js",
       "SourceId": "DarlineBeverly",
       "SourceType": "Discovered",
       "ContentRoot": "/workspaces/Port/DarlineBeverly/wwwroot/",
       "BasePath": "_content/DarlineBeverly",
-      "RelativePath": "portfolio.json",
+      "RelativePath": "js/infinite.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -413,7 +508,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/portfolio.json"
+      "OriginalItemSpec": "wwwroot/js/infinite.js"
     }
   ]
 }
