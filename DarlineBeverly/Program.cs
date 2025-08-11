@@ -6,49 +6,63 @@ using DarlineBeverly.Data;
 using DarlineBeverly.Dtos;
 using DarlineBeverly.Models;
 using System.Text.RegularExpressions;
-using Markdig;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Components;
-
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add Razor Components & Blazor
+// --- Services Registration ---
+
+// Add Blazor and Razor Pages
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-// HttpClient for API calls — base address from app settings
-builder.Services.AddHttpClient("Default", (sp, client) =>
+// Register named HttpClient without NavigationManager dependency
+builder.Services.AddHttpClient("Default", client =>
 {
-    // Use the app's own base address in dev
-    var nav = sp.GetRequiredService<NavigationManager>();
-    client.BaseAddress = new Uri(nav.BaseUri);
+    client.BaseAddress = new Uri("http://localhost:5000"); // Or your API base URL
 });
+
+// This lets you inject HttpClient via IHttpClientFactory easily
 builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("Default"));
 
-// Database
+
+
+// Database context with SQLite connection
 builder.Services.AddDbContext<BlogDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// File upload size limit
+// Configure file upload size limit
 builder.Services.Configure<FormOptions>(options =>
 {
-    options.MultipartBodyLengthLimit = 200_000_000; // 200MB
+    options.MultipartBodyLengthLimit = 200_000_000; // 200 MB
 });
+
+// Authentication with cookie scheme
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/login"; // Redirect unauthenticated users here
+    });
+
+// Authorization policies (default)
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-// Run migrations at startup
+// --- Database migration on startup ---
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<BlogDbContext>();
     db.Database.Migrate();
 }
 
-// Slug generator
+// --- Helper: Slug generator ---
 static string GenerateSlug(string title)
 {
     var slug = title.ToLowerInvariant().Normalize(System.Text.NormalizationForm.FormKD);
@@ -58,14 +72,15 @@ static string GenerateSlug(string title)
     return slug;
 }
 
-// --- Public endpoints ---
+// --- API Endpoints ---
+
 app.MapGet("/api/blog/articles", async (BlogDbContext db, int page = 1, int pageSize = 10, string? search = null, int? categoryId = null, string? tag = null) =>
 {
     var q = db.Articles
-              .Include(a => a.Category)
-              .Include(a => a.ArticleTags).ThenInclude(at => at.Tag)
-              .Where(a => a.IsPublished)
-              .AsQueryable();
+        .Include(a => a.Category)
+        .Include(a => a.ArticleTags).ThenInclude(at => at.Tag)
+        .Where(a => a.IsPublished)
+        .AsQueryable();
 
     if (!string.IsNullOrWhiteSpace(search))
         q = q.Where(a => a.Title.Contains(search) || a.Content.Contains(search));
@@ -77,19 +92,19 @@ app.MapGet("/api/blog/articles", async (BlogDbContext db, int page = 1, int page
         q = q.Where(a => a.ArticleTags.Any(at => at.Tag.Name == tag));
 
     var items = await q.OrderByDescending(a => a.PublishedOn)
-                       .Skip((page - 1) * pageSize)
-                       .Take(pageSize)
-                       .Select(a => new
-                       {
-                           a.Id,
-                           a.Title,
-                           a.Slug,
-                           a.Excerpt,
-                           a.PublishedOn,
-                           Category = a.Category != null ? a.Category.Name : null,
-                           Tags = a.ArticleTags.Select(t => t.Tag.Name)
-                       })
-                       .ToListAsync();
+        .Skip((page - 1) * pageSize)
+        .Take(pageSize)
+        .Select(a => new
+        {
+            a.Id,
+            a.Title,
+            a.Slug,
+            a.Excerpt,
+            a.PublishedOn,
+            Category = a.Category != null ? a.Category.Name : null,
+            Tags = a.ArticleTags.Select(t => t.Tag.Name)
+        })
+        .ToListAsync();
 
     return Results.Ok(items);
 });
@@ -106,6 +121,7 @@ app.MapGet("/api/blog/articles/{slug}", async (BlogDbContext db, string slug) =>
 });
 
 // --- Admin endpoints ---
+
 app.MapGet("/api/admin/categories", async (BlogDbContext db) =>
 {
     var categories = await db.Categories
@@ -115,7 +131,6 @@ app.MapGet("/api/admin/categories", async (BlogDbContext db) =>
 })
 .RequireAuthorization();
 
-// Create article
 app.MapPost("/api/admin/articles", async (BlogDbContext db, ArticleDto dto) =>
 {
     if (string.IsNullOrWhiteSpace(dto.Title)) return Results.BadRequest("Title required");
@@ -153,7 +168,6 @@ app.MapPost("/api/admin/articles", async (BlogDbContext db, ArticleDto dto) =>
 })
 .RequireAuthorization();
 
-// Update
 app.MapPut("/api/admin/articles/{id}", async (int id, BlogDbContext db, ArticleDto dto) =>
 {
     var article = await db.Articles
@@ -182,7 +196,6 @@ app.MapPut("/api/admin/articles/{id}", async (int id, BlogDbContext db, ArticleD
 })
 .RequireAuthorization();
 
-// Delete
 app.MapDelete("/api/admin/articles/{id}", async (int id, BlogDbContext db) =>
 {
     var article = await db.Articles.FindAsync(id);
@@ -193,7 +206,6 @@ app.MapDelete("/api/admin/articles/{id}", async (int id, BlogDbContext db) =>
 })
 .RequireAuthorization();
 
-// File upload
 app.MapPost("/api/admin/upload", async (HttpRequest request, IWebHostEnvironment env) =>
 {
     if (!request.HasFormContentType) return Results.BadRequest("Expected form file");
@@ -216,7 +228,8 @@ app.MapPost("/api/admin/upload", async (HttpRequest request, IWebHostEnvironment
 })
 .RequireAuthorization();
 
-// Middleware pipeline
+// --- Middleware pipeline ---
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
@@ -226,10 +239,45 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+
+app.UseAuthentication(); // MUST come before UseAuthorization
+app.UseAuthorization();
+
 app.UseAntiforgery();
 
 app.MapBlazorHub();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
+// --- Login endpoint ---
+
+app.MapPost("/api/login", async (HttpContext context) =>
+{
+    var form = await context.Request.ReadFormAsync();
+    var formName = form["formname"].ToString(); // Should be "login"
+    var username = form["username"].ToString();
+    var password = form["password"].ToString();
+
+    // Simple hardcoded login logic, replace with real user validation as needed
+    if (username == "admin" && password == "password123")
+    {
+        var claims = new List<System.Security.Claims.Claim>
+        {
+            new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Name, username)
+        };
+        var identity = new System.Security.Claims.ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        var principal = new System.Security.Claims.ClaimsPrincipal(identity);
+
+        await context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+        context.Response.Redirect("/");
+    }
+    else
+    {
+        context.Response.StatusCode = 401;
+        await context.Response.WriteAsync("Invalid username or password");
+    }
+});
+
+// Run the app
 app.Run();

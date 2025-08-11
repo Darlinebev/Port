@@ -50,7 +50,12 @@
 
     protected override async Task OnInitializedAsync()
     {
+        // SET BASE ADDRESS BEFORE ANY HTTP CALLS
+        if (Http.BaseAddress == null)
+            Http.BaseAddress = new Uri(Nav.BaseUri);
+
         categories = await Http.GetFromJsonAsync<List<Category>>("/api/admin/categories") ?? new();
+
         if (Id.HasValue)
         {
             var article = await Http.GetFromJsonAsync<ArticleDto>($"/api/admin/articles/{Id.Value}");
@@ -90,7 +95,7 @@
         }
         else
         {
-            // handle error
+            // You might want to add error handling here
         }
     }
 

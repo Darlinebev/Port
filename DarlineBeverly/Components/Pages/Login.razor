@@ -1,0 +1,51 @@
+@page "/login"
+@inject NavigationManager Nav
+@inject HttpClient Http
+
+<h3>Login</h3>
+
+@if (!string.IsNullOrEmpty(ErrorMessage))
+{
+    <p style="color:red">@ErrorMessage</p>
+}
+
+<EditForm Model="loginModel" OnValidSubmit="OnSubmit" FormName="LoginForm">
+    <InputText @bind-Value="loginModel.Username" placeholder="Username" />
+    <br />
+    <InputText @bind-Value="loginModel.Password" type="password" placeholder="Password" />
+    <br />
+    <button type="submit">Login</button>
+</EditForm>
+
+@code {
+    private LoginModel loginModel = new();
+
+    private string? ErrorMessage;
+
+    private async Task OnSubmit()
+    {
+        var formData = new MultipartFormDataContent
+        {
+            { new StringContent("login"), "formname" },          // <<< Add this line
+            { new StringContent(loginModel.Username), "username" },
+            { new StringContent(loginModel.Password), "password" }
+        };
+
+        var response = await Http.PostAsync("/api/login", formData);
+
+        if (response.IsSuccessStatusCode)
+        {
+            Nav.NavigateTo("/");
+        }
+        else
+        {
+            ErrorMessage = await response.Content.ReadAsStringAsync();
+        }
+    }
+
+    private class LoginModel
+    {
+        public string Username { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+    }
+}
