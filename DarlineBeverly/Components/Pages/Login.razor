@@ -1,6 +1,6 @@
 @page "/login"
 @inject NavigationManager Nav
-@inject HttpClient Http
+@inject IJSRuntime JS
 
 <h3>Login</h3>
 
@@ -9,43 +9,115 @@
     <p style="color:red">@ErrorMessage</p>
 }
 
-<EditForm Model="loginModel" OnValidSubmit="OnSubmit" FormName="LoginForm">
+<EditForm Model="loginModel" OnValidSubmit="OnSubmit" FormName="login">
     <InputText @bind-Value="loginModel.Username" placeholder="Username" />
     <br />
     <InputText @bind-Value="loginModel.Password" type="password" placeholder="Password" />
     <br />
-    <button type="submit">Login</button>
+    <button type="submit" disabled="@isSubmitting">@buttonText</button>
 </EditForm>
 
 @code {
     private LoginModel loginModel = new();
-
     private string? ErrorMessage;
+    private bool isSubmitting = false;
+    private string buttonText = "Login";
 
-    private async Task OnSubmit()
-    {
-        var formData = new MultipartFormDataContent
-        {
-            { new StringContent("login"), "formname" },          // <<< Add this line
-            { new StringContent(loginModel.Username), "username" },
-            { new StringContent(loginModel.Password), "password" }
-        };
-
-        var response = await Http.PostAsync("/api/login", formData);
-
-        if (response.IsSuccessStatusCode)
-        {
-            Nav.NavigateTo("/");
-        }
-        else
-        {
-            ErrorMessage = await response.Content.ReadAsStringAsync();
-        }
-    }
+    // For handling prerendering issue
+    private bool jsReady = false;
+    private bool pendingLogin = false;
 
     private class LoginModel
     {
         public string Username { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
     }
+
+    private class LoginResult
+    {
+        public int status { get; set; }
+        public string text { get; set; } = "";
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            jsReady = true;
+
+            // If user clicked submit before JS was ready
+            if (pendingLogin)
+            {
+                pendingLogin = false;
+                await DoLogin();
+            }
+        }
+    }
+
+    private async Task OnSubmit()
+    {
+        ErrorMessage = null;
+        isSubmitting = true;
+        buttonText = "Logging in...";
+
+        if (jsReady)
+        {
+            await DoLogin();
+        }
+        else
+        {
+            pendingLogin = true;
+        }
+    }
+
+    private async Task DoLogin()
+    {
+        try
+        {
+            var result = await JS.InvokeAsync<LoginResult>("blazorLogin", "/api/login", loginModel);
+
+            if (result?.status == 200)
+            {
+                buttonText = "Logged in";
+                StateHasChanged();
+                await Task.Delay(1000); // Show message before redirect
+                Nav.NavigateTo("/", forceLoad: true);
+            }
+            else
+            {
+                ErrorMessage = string.IsNullOrWhiteSpace(result?.text)
+                    ? "Invalid username or password"
+                    : result.text;
+                buttonText = "Login";
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+            buttonText = "Login";
+        }
+        finally
+        {
+            isSubmitting = false;
+            StateHasChanged();
+        }
+    }
 }
+
+<!-- JS helper -->
+<script>
+    window.blazorLogin = async function (url, payload) {
+        try {
+            const resp = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+                credentials: 'same-origin'
+            });
+            const text = await resp.text();
+            return { status: resp.status, text };
+        } catch (err) {
+            return { status: 0, text: err?.toString() ?? 'Network error' };
+        }
+    };
+</script>
