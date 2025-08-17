@@ -1,6 +1,6 @@
+
 @page "/login"
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
-@using Microsoft.AspNetCore.Antiforgery
 @using Microsoft.AspNetCore.Components.Forms
 @inject HttpClient Http
 @inject NavigationManager Nav
@@ -35,19 +35,17 @@
             Console.WriteLine($"Username from component: {model.Username}");
             Console.WriteLine($"Password from component: {model.Password}");
 
-            // The correct way to get the antiforgery token in a Blazor component
-            // is to create a new request and then get the antiforgery token from the headers
-            // that the Antiforgery middleware adds.
-            var token = await GetAntiforgeryTokenAsync();
-            
-            // Create a request message and add the token to the header
+            // Call the new API endpoint to get the antiforgery token
+            var antiforgeryToken = await GetAntiforgeryTokenAsync();
+
             var request = new HttpRequestMessage(HttpMethod.Post, "/api/login")
             {
                 Content = JsonContent.Create(model)
             };
-            request.Headers.Add("X-CSRF-TOKEN", token);
+            
+            // Add the token to the header with the correct name
+            request.Headers.Add("RequestVerificationToken", antiforgeryToken);
 
-            // Send the request
             var response = await Http.SendAsync(request);
 
             if (response.IsSuccessStatusCode)
@@ -56,7 +54,7 @@
             }
             else
             {
-                ErrorMessage = $"Login failed. Please check your credentials.";
+                ErrorMessage = "Login failed. Please check your credentials.";
             }
         }
         catch (Exception ex)
@@ -65,12 +63,11 @@
         }
     }
     
-    // A helper method to get the antiforgery token
+    // A helper method to make an HTTP GET request to the new endpoint
     private async Task<string> GetAntiforgeryTokenAsync()
     {
-        var response = await Http.GetAsync("/api/get-antiforgery-token");
+        var response = await Http.GetAsync("/api/antiforgery-token");
         response.EnsureSuccessStatusCode();
-        var token = await response.Content.ReadAsStringAsync();
-        return token;
+        return await response.Content.ReadAsStringAsync();
     }
 }

@@ -1,3 +1,4 @@
+
 using DarlineBeverly.Components;
 using DarlineBeverly.Data;
 using DarlineBeverly.Dtos;
@@ -8,14 +9,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Antiforgery;
-using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Services
+// Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddAntiforgery();
@@ -213,10 +212,16 @@ app.MapPost("/api/admin/upload", async (HttpRequest request, IWebHostEnvironment
     return Results.Ok(new { url, fileName = file.FileName, size = file.Length, contentType = file.ContentType });
 }).RequireAuthorization().DisableAntiforgery();
 
-// Login Endpoint - No .DisableAntiforgery() here
+// Antiforgery endpoint for Blazor components
+app.MapGet("/api/antiforgery-token", (IAntiforgery antiforgery, HttpContext context) =>
+{
+    var tokens = antiforgery.GetAndStoreTokens(context);
+    return Results.Ok(tokens.RequestToken);
+});
+
+// Login Endpoint
 app.MapPost("/api/login", async (HttpContext context, LoginRequest login, IAntiforgery antiforgery) =>
 {
-    // Validate the antiforgery token manually because this is a minimal API endpoint.
     try
     {
         await antiforgery.ValidateRequestAsync(context);
@@ -245,7 +250,6 @@ app.MapPost("/api/login", async (HttpContext context, LoginRequest login, IAntif
     }
 });
 
-
 // Middleware
 if (!app.Environment.IsDevelopment())
 {
@@ -260,12 +264,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseAntiforgery();
 
-app.MapBlazorHub();
-
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
 app.Run();
 
 public record LoginRequest(string Username, string Password);
-
