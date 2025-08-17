@@ -7,14 +7,25 @@
 
 <h1>Blog</h1>
 <div class="blog-list">
-    @foreach (var p in Posts)
+    @if (Posts == null || (IsLoading && Posts.Count == 0))
     {
-        <article class="preview-card">
-            <h2><a href="/blog/@p.Slug">@p.Title</a></h2>
-            <div class="meta">@p.PublishedOn?.ToLocalTime().ToString("MMM d, yyyy") • @p.Category</div>
-            <p class="excerpt">@p.Excerpt</p>
-            <div class="tag-chip">@string.Join(", ", p.Tags)</div>
-        </article>
+        <p>Loading...</p>
+    }
+    else if (!Posts.Any())
+    {
+        <p>No articles found.</p>
+    }
+    else
+    {
+        @foreach (var p in Posts)
+        {
+            <article class="preview-card">
+                <h2><a href="/blog/@p.Slug">@p.Title</a></h2>
+                <div class="meta">@(p.PublishedOn?.ToLocalTime().ToString("MMM d, yyyy") ?? "Unpublished") • @(p.Category ?? "No Category")</div>
+                <p class="excerpt">@p.Excerpt</p>
+                <div class="tag-chip">@(string.Join(", ", p.Tags ?? Enumerable.Empty<string>()))</div>
+            </article>
+        }
     }
 
     <div id="infinite-sentinel" class="sentinel">
@@ -35,7 +46,7 @@
         if (firstRender)
         {
             dotNetRef = DotNetObjectReference.Create(this);
-            await LoadPage(); // load first page
+            await LoadPage();
             await JS.InvokeVoidAsync("initInfiniteScroll", dotNetRef, "infinite-sentinel");
         }
     }
@@ -45,19 +56,29 @@
     {
         if (IsLoading || Done) return;
         IsLoading = true;
-        var items = await Http.GetFromJsonAsync<List<PostPreview>>($"/api/blog/articles?page={page}&pageSize=6");
-        if (items == null || items.Count == 0)
+        try
         {
+            var items = await Http.GetFromJsonAsync<List<PostPreview>>($"api/blog/articles?page={page}&pageSize=6");
+            if (items == null || items.Count == 0)
+            {
+                Done = true;
+            }
+            else
+            {
+                Posts.AddRange(items);
+                page++;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading articles: {ex.Message}");
             Done = true;
         }
-        else
-        {
-            Posts.AddRange(items);
-            page++;
-            StateHasChanged();
-        }
         IsLoading = false;
+        StateHasChanged();
     }
 
     public record PostPreview(int Id, string Title, string Slug, string Excerpt, DateTime? PublishedOn, string? Category, IEnumerable<string>? Tags);
 }
+
+<script src="/js/infiniteScroll.js"></script>

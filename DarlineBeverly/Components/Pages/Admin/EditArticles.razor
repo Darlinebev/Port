@@ -1,45 +1,63 @@
 @page "/admin/articles/edit"
 @page "/admin/articles/edit/{Id:int?}"
 @using DarlineBeverly.Components.Pages.Admin
+@using Microsoft.AspNetCore.Components.Authorization
 @inject HttpClient Http
 @inject NavigationManager Nav
 @using Microsoft.AspNetCore.Components.Forms
 @using DarlineBeverly.Models
 @using DarlineBeverly.Dtos
 
-<h3>@(Id.HasValue ? "Edit Article" : "New Article")</h3>
+<AuthorizeView>
+    <Authorized>
+        <h3>@(Id.HasValue ? "Edit Article" : "New Article")</h3>
 
-<EditForm Model="model" OnValidSubmit="Save">
-    <InputText @bind-Value="model.Title" placeholder="Title" />
-    <InputText @bind-Value="model.Slug" placeholder="Slug (optional)" />
-    <div>
-        <label>Category</label>
-        <select @bind="model.CategoryId">
-            <option value="">-- none --</option>
-            @foreach (var c in categories) { <option value="@c.Id">@c.Name</option> }
-        </select>
-    </div>
-    <div>
-        <label>Tags (comma separated)</label>
-        <InputText @bind-Value="tagInput" />
-    </div>
-    <div>
-        <label>Content (Markdown)</label>
-        <textarea @bind="model.Content" rows="12"></textarea>
-    </div>
-    <div>
-        <label>Files</label>
-        <InputFile OnChange="OnFilesSelected" multiple />
-        <ul>
-            @foreach (var f in uploadedFiles) { <li>@f.fileName - @f.url</li> }
-        </ul>
-    </div>
+        @if (!string.IsNullOrEmpty(ErrorMessage))
+        {
+            <p style="color:red">@ErrorMessage</p>
+        }
 
-    <div>
-        <button type="submit">Save</button>
-        <button type="button" @onclick="Publish">Publish</button>
-    </div>
-</EditForm>
+        <EditForm Model="model" OnValidSubmit="Save" Context="formContext">
+            <InputText @bind-Value="model.Title" placeholder="Title" />
+            <InputText @bind-Value="model.Slug" placeholder="Slug (optional)" />
+            <div>
+                <label>Category</label>
+                <select @bind="model.CategoryId">
+                    <option value="">-- none --</option>
+                    @foreach (var c in categories)
+                    {
+                        <option value="@c.Id">@c.Name</option>
+                    }
+                </select>
+            </div>
+            <div>
+                <label>Tags (comma separated)</label>
+                <InputText @bind-Value="tagInput" />
+            </div>
+            <div>
+                <label>Content (Markdown)</label>
+                <textarea @bind="model.Content" rows="12"></textarea>
+            </div>
+            <div>
+                <label>Files</label>
+                <InputFile OnChange="OnFilesSelected" multiple />
+                <ul>
+                    @foreach (var f in uploadedFiles)
+                    {
+                        <li>@f.fileName - @f.url</li>
+                    }
+                </ul>
+            </div>
+            <div>
+                <button type="submit">Save</button>
+                <button type="button" @onclick="Publish">Publish</button>
+            </div>
+        </EditForm>
+    </Authorized>
+    <NotAuthorized>
+        <p>Please <a href="/login">log in</a> to edit articles.</p>
+    </NotAuthorized>
+</AuthorizeView>
 
 @code {
     [Parameter] public int? Id { get; set; }
@@ -47,19 +65,29 @@
     private string tagInput = "";
     private List<(string fileName, string url)> uploadedFiles = new();
     private List<Category> categories = new();
+    private string? ErrorMessage;
 
     protected override async Task OnInitializedAsync()
     {
-        // SET BASE ADDRESS BEFORE ANY HTTP CALLS
         if (Http.BaseAddress == null)
             Http.BaseAddress = new Uri(Nav.BaseUri);
 
-        categories = await Http.GetFromJsonAsync<List<Category>>("/api/admin/categories") ?? new();
-
-        if (Id.HasValue)
+        try
         {
-            var article = await Http.GetFromJsonAsync<ArticleDto>($"/api/admin/articles/{Id.Value}");
-            if (article != null) model = article;
+            categories = await Http.GetFromJsonAsync<List<Category>>("/api/admin/categories") ?? new();
+            if (Id.HasValue)
+            {
+                var article = await Http.GetFromJsonAsync<ArticleDto>($"/api/admin/articles/{Id.Value}");
+                if (article != null)
+                {
+                    model = article;
+                    tagInput = string.Join(", ", article.TagNames);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error loading edit page: {ex.Message}";
         }
     }
 
@@ -82,20 +110,27 @@
 
     private async Task Save()
     {
-        model.TagNames = tagInput.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
-        HttpResponseMessage res;
-        if (Id.HasValue)
-            res = await Http.PutAsJsonAsync($"/api/admin/articles/{Id.Value}", model);
-        else
-            res = await Http.PostAsJsonAsync($"/api/admin/articles", model);
+        try
+        {
+            model.TagNames = tagInput.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
+            HttpResponseMessage res;
+            if (Id.HasValue)
+                res = await Http.PutAsJsonAsync($"/api/admin/articles/{Id.Value}", model);
+            else
+                res = await Http.PostAsJsonAsync("/api/admin/articles", model);
 
-        if (res.IsSuccessStatusCode)
-        {
-            Nav.NavigateTo("/admin/articles");
+            if (res.IsSuccessStatusCode)
+            {
+                Nav.NavigateTo("/admin/articles");
+            }
+            else
+            {
+                ErrorMessage = $"Failed to save article: {res.StatusCode}";
+            }
         }
-        else
+        catch (Exception ex)
         {
-            // You might want to add error handling here
+            ErrorMessage = $"Error saving article: {ex.Message}";
         }
     }
 
@@ -106,6 +141,15 @@
         await Save();
     }
 
-    private class UploadResult { public string url { get; set; } = ""; public string fileName { get; set; } = ""; }
-    private class Category { public int Id { get; set; } public string Name { get; set; } = ""; }
+    private class UploadResult
+    {
+        public string url { get; set; } = "";
+        public string fileName { get; set; } = "";
+    }
+
+    private class Category
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = "";
+    }
 }

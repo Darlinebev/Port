@@ -1,9 +1,6 @@
-// Data/BlogDbContext.cs
+
+using DarlineBeverly.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using DarlineBeverly.Components;
-using DarlineBeverly.Models; // Add this if Article is in Models namespace
 
 namespace DarlineBeverly.Data
 {
@@ -11,11 +8,11 @@ namespace DarlineBeverly.Data
     {
         public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options) { }
 
-        public DbSet<Article> Articles => Set<Article>();
-        public DbSet<Tag> Tags => Set<Tag>();
-        public DbSet<ArticleTag> ArticleTags => Set<ArticleTag>();
-        public DbSet<Category> Categories => Set<Category>();
-        public DbSet<UploadedFile> UploadedFiles => Set<UploadedFile>();
+        public DbSet<Article> Articles { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<ArticleTag> ArticleTags { get; set; }
+        public DbSet<ArticleFile> Files { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,16 +26,13 @@ namespace DarlineBeverly.Data
 
             modelBuilder.Entity<ArticleTag>()
                 .HasOne(at => at.Tag)
-                .WithMany(t => t.ArticleTags)
+                .WithMany()
                 .HasForeignKey(at => at.TagId);
 
             modelBuilder.Entity<Article>()
                 .HasOne(a => a.Category)
-                .WithMany(c => c.Articles)
-                .HasForeignKey(a => a.CategoryId)
-                .OnDelete(DeleteBehavior.SetNull);
-
-            base.OnModelCreating(modelBuilder);
+                .WithMany()
+                .HasForeignKey(a => a.CategoryId);
         }
     }
 }

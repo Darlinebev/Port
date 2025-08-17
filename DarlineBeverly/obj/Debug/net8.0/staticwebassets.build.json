@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "XOzVZILd4yIdNHp2Tb8zYc6ykIhGuBavC6dYnBITY7I=",
+  "Hash": "ok7EA3o0aA/ajwYLdjKtIOSrRLtoz7BERI4lwNhZtqA=",
   "Source": "DarlineBeverly",
   "BasePath": "_content/DarlineBeverly",
   "Mode": "Default",
@@ -492,12 +492,12 @@
       "OriginalItemSpec": "wwwroot/images/WebDevelopment.png"
     },
     {
-      "Identity": "/workspaces/Port/DarlineBeverly/wwwroot/js/infinite.js",
+      "Identity": "/workspaces/Port/DarlineBeverly/wwwroot/js/InfiniteScroll.js",
       "SourceId": "DarlineBeverly",
       "SourceType": "Discovered",
       "ContentRoot": "/workspaces/Port/DarlineBeverly/wwwroot/",
       "BasePath": "_content/DarlineBeverly",
-      "RelativePath": "js/infinite.js",
+      "RelativePath": "js/InfiniteScroll.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -508,7 +508,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/js/infinite.js"
+      "OriginalItemSpec": "wwwroot/js/InfiniteScroll.js"
     }
   ]
 }

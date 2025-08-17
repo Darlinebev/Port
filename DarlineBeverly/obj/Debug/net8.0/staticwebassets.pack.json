@@ -97,8 +97,8 @@
       "PackagePath": "staticwebassets/images/uiux.jpg"
     },
     {
-      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/js/infinite.js",
-      "PackagePath": "staticwebassets/js/infinite.js"
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/js/InfiniteScroll.js",
+      "PackagePath": "staticwebassets/js/InfiniteScroll.js"
     },
     {
       "Id": "obj/Debug/net8.0/staticwebassets/msbuild.DarlineBeverly.Microsoft.AspNetCore.StaticWebAssets.props",

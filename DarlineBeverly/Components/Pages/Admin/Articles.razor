@@ -1,47 +1,55 @@
 @page "/admin/articles"
 @using DarlineBeverly.Components
-@namespace DarlineBeverly.Components.Pages.Admin
+@using DarlineBeverly.Models
+@using DarlineBeverly.Dtos
+@using Microsoft.AspNetCore.Components.Authorization
 @inject IHttpClientFactory HttpClientFactory
 @inject NavigationManager Nav
 @inject IJSRuntime JS
 
-<h2>Admin - Articles</h2>
+<AuthorizeView>
+    <Authorized>
+        <h2>Admin - Articles</h2>
+        <button class="btn" style="background-color:green;" @onclick="CreateNew">Create New</button>
 
-<button class="btn" style="background-color:green;" @onclick="CreateNew">Create New</button>
-
-@if (articles == null)
-{
-    <p>Loading...</p>
-}
-else if (!articles.Any())
-{
-    <p>No articles found.</p>
-}
-else
-{
-    <table class="admin-table">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Published</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var a in articles)
-            {
-                <tr>
-                    <td>@a.Title</td>
-                    <td>@(a.IsPublished ? "Yes" : "Draft")</td>
-                    <td>
-                        <button @onclick="() => Edit(a.Id)">Edit</button>
-                        <button @onclick="() => Delete(a.Id)">Delete</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+        @if (articles == null)
+        {
+            <p>Loading...</p>
+        }
+        else if (!articles.Any())
+        {
+            <p>No articles found.</p>
+        }
+        else
+        {
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Published</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var a in articles)
+                    {
+                        <tr>
+                            <td>@a.Title</td>
+                            <td>@(a.IsPublished ? "Yes" : "Draft")</td>
+                            <td>
+                                <button @onclick="() => Edit(a.Id)">Edit</button>
+                                <button @onclick="() => Delete(a.Id)">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>Please <a href="/login">log in</a> to manage articles.</p>
+    </NotAuthorized>
+</AuthorizeView>
 
 @code {
     private List<AdminArticleListItem>? articles;
