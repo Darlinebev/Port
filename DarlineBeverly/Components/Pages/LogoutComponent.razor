@@ -1,0 +1,17 @@
+@page "/authentication/logout"
+@inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Authorization
+
+@code{
+        [CascadingParameter]
+        public HttpContext Context { get; set; }
+
+        protected override async Task OnInitializedAsync()
+        {
+            await Context.SignOutAsync("AuthConstant.Scheme");
+            NavigationManager.NavigateTo("authentication/login");
+        }
+}

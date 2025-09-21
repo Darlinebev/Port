@@ -1,0 +1,71 @@
+@page "/authentication/register"
+
+@using Microsoft.AspNetCore.Identity
+@using DarlineBeverly.Data
+@using Microsoft.AspNetCore.Components.Forms
+@inject UserManager<IdentityUser> UserManager
+@inject NavigationManager NavigationManager
+
+<h3>Register Component</h3>
+
+<EditForm Model="registerModel" method="Post" FormName="registerForm" OnValidSubmit="Register">
+    <DataAnnotationsValidator />
+    
+    <div class="form-group mt-2">
+      <label class="form-label" for="email"> Enter Email Address</label>
+      <InputText @bind-Value="registerModel.Email" class="form-control" />    
+      <ValidationMessage For="()=>registerModel.Email" />
+    </div>
+
+    <div class="form-group mt-2">
+      <label class="form-label" for="password"> Enter Password</label>
+        <InputText @bind-Value="registerModel.Password" type="password" class="form-control" />
+        <ValidationMessage For="()=>registerModel.Password" />
+    </div>
+
+    <div class="form-group mt-2">
+      <label class="form-label" for="confirmPassword"> Confirm Password</label>
+        <InputText @bind-Value="registerModel.ConfirmPassword" type="password" class="form-control" />
+        <ValidationMessage For="()=>registerModel.ConfirmPassword" />
+    </div>
+
+    <div>
+        <button class="btn btn-primary mt-3" type="submit">Register</button>
+    </div>
+</EditForm>
+
+@if (isSuccessful)
+{
+    <div class="alert alert-success mt-3" role="alert">
+        Registration successful! Redirecting to login page...
+    </div>
+}
+
+@code {
+    [SupplyParameterFromForm(FormName = "registerForm")]
+    public Register registerModel { get; set; } = new Register();   
+    private bool isSuccessful;
+
+    async Task Register()
+    {
+        // Create a new IdentityUser instance
+        var user = new IdentityUser { UserName = registerModel.Email, Email = registerModel.Email };
+
+        // The UserManager.CreateAsync method handles hashing the password for you.
+        // You pass the user object and the plain text password.
+        var result = await UserManager.CreateAsync(user, registerModel.Password);
+
+        if(result.Succeeded)
+        {
+            isSuccessful = true;
+            NavigationManager.NavigateTo("authentication/login");
+        }
+        else
+        {
+            foreach(var error in result.Errors)
+            {
+                Console.WriteLine(error.Description);
+            }
+        }
+    }
+}

@@ -8,12 +8,35 @@
             <a href ="/Projects">Projects</a>
             <a href ="/Blog">Blog</a>
             <a href ="/Contact">Contact</a>
-            <a href ="/admin/articles">Articles</a>
-            <a href ="/login">Login</a>
-              <a href="admin/articles"></a>
-       
-            
+          
+               
         </div>
+
+        <AuthorizeView>
+            <Authorized>
+                <div class="nav-item px3">              
+                <NavLink class="nav-link" href="authentication/logout">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Logout
+                </NavLink>
+                </div>  
+            </Authorized>
+
+            <NotAuthorized>
+                 <div class="nav-item px3"> 
+             <NavLink class="nav-link" href="authentication/login">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Login
+                </NavLink>
+                </div>
+                 <div class="nav-item px3"> 
+                 <NavLink class="nav-link" href="authentication/register">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Register
+                </NavLink>
+                </div>
+
+
+
+            </NotAuthorized>
+        </AuthorizeView>
 
         <article class="content px-4">
             @Body
