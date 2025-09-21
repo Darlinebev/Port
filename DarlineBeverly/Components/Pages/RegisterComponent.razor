@@ -1,3 +1,5 @@
+
+
 @page "/authentication/register"
 
 @using Microsoft.AspNetCore.Identity
@@ -7,6 +9,21 @@
 @inject NavigationManager NavigationManager
 
 <h3>Register Component</h3>
+
+@*
+    This div will display server-side errors to the user.
+*@
+@if (errors.Count > 0)
+{
+    <div class="alert alert-danger mt-3" role="alert">
+        <ul class="list-unstyled mb-0">
+            @foreach (var error in errors)
+            {
+                <li>@error</li>
+            }
+        </ul>
+    </div>
+}
 
 <EditForm Model="registerModel" method="Post" FormName="registerForm" OnValidSubmit="Register">
     <DataAnnotationsValidator />
@@ -34,37 +51,31 @@
     </div>
 </EditForm>
 
-@if (isSuccessful)
-{
-    <div class="alert alert-success mt-3" role="alert">
-        Registration successful! Redirecting to login page...
-    </div>
-}
-
 @code {
     [SupplyParameterFromForm(FormName = "registerForm")]
-    public Register registerModel { get; set; } = new Register();   
-    private bool isSuccessful;
+    public Register registerModel { get; set; } = new Register();
+    
+    // A list to hold and display registration errors.
+    private List<string> errors = new List<string>();
 
     async Task Register()
     {
-        // Create a new IdentityUser instance
-        var user = new IdentityUser { UserName = registerModel.Email, Email = registerModel.Email };
+        // Clear any previous errors before a new attempt.
+        errors.Clear();
 
-        // The UserManager.CreateAsync method handles hashing the password for you.
-        // You pass the user object and the plain text password.
+        var user = new IdentityUser { UserName = registerModel.Email, Email = registerModel.Email };
         var result = await UserManager.CreateAsync(user, registerModel.Password);
 
         if(result.Succeeded)
         {
-            isSuccessful = true;
             NavigationManager.NavigateTo("authentication/login");
         }
         else
         {
+            // Add server-side errors to our list to be displayed to the user.
             foreach(var error in result.Errors)
             {
-                Console.WriteLine(error.Description);
+                errors.Add(error.Description);
             }
         }
     }

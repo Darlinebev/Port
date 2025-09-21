@@ -3,59 +3,82 @@
 @page "/authentication/login"
 
 @using Microsoft.AspNetCore.Identity
-@using Microsoft.AspNetCore.Authentication
-@using System.Security.Claims
-@using DarlineBeverly.Data
 @inject SignInManager<IdentityUser> SignInManager
 @inject NavigationManager NavigationManager
 
 <h3>Login</h3>
 
-<EditForm Model="Login" OnValidSubmit="HandleLogin" FormName="loginForm">
+@if (errors.Count > 0)
+{
+    <div class="alert alert-danger mt-3">
+        <ul class="list-unstyled mb-0">
+            @foreach (var error in errors)
+            {
+                <li>@error</li>
+            }
+        </ul>
+    </div>
+}
+
+@if (isSuccessful)
+{
+    <div class="alert alert-success mt-3">
+        Login successful! Redirecting...
+    </div>
+}
+<EditForm Model="@loginModel" OnValidSubmit="@HandleLogin" FormName="loginForm">
+
     <DataAnnotationsValidator />
 
     <div class="form-group mt-2">
-        <label class="form-label" for="email">Enter Email Address</label>
-        <InputText @bind-Value="Login.Email" class="form-control" />
-        <ValidationMessage For="() => Login.Email" />
+        <label for="email">Enter Email Address</label>
+        <InputText @bind-Value="loginModel.Email" class="form-control" id="email" />
+        <ValidationMessage For="@(() => loginModel.Email)" />
     </div>
 
     <div class="form-group mt-2">
-        <label class="form-label" for="password">Enter Password</label>
-        <InputText @bind-Value="Login.Password" type="password" class="form-control" />
-        <ValidationMessage For="() => Login.Password" />
+        <label for="password">Enter Password</label>
+        <InputText @bind-Value="loginModel.Password" type="password" class="form-control" id="password" />
+        <ValidationMessage For="@(() => loginModel.Password)" />
     </div>
 
     <div class="form-group mt-2">
         <div class="form-check">
-            <InputCheckbox @bind-Value="Login.RememberMe" class="form-check-input" />
-            <label class="form-check-label" for="rememberMe">Remember Me</label>
+            <InputCheckbox @bind-Value="loginModel.RememberMe" class="form-check-input" id="rememberMe" />
+            <label for="rememberMe" class="form-check-label">Remember Me</label>
         </div>
     </div>
 
-    <div class="form-group mt-3">
-        <button type="submit" class="btn btn-primary">Login</button>
-    </div>
+    <button type="submit" class="btn btn-primary mt-3">Login</button>
 </EditForm>
 
 @code {
-    [SupplyParameterFromForm(FormName = "loginForm")]
-    public Login Login { get; set; } = new Login();
+    private Login loginModel { get; set; } = new Login();
 
-    [SupplyParameterFromQuery]
+    private List<string> errors = new();
+    private bool isSuccessful;
     private string ReturnUrl { get; set; } = "/";
 
     private async Task HandleLogin()
     {
-        var result = await SignInManager.PasswordSignInAsync(Login.Email, Login.Password, Login.RememberMe, lockoutOnFailure: false);
+        errors.Clear();
+
+        var result = await SignInManager.PasswordSignInAsync(
+            loginModel.Email,
+            loginModel.Password,
+            loginModel.RememberMe,
+            lockoutOnFailure: false
+        );
 
         if (result.Succeeded)
         {
-            NavigationManager.NavigateTo(ReturnUrl);
+            isSuccessful = true;
+            await Task.Delay(1000);
+            NavigationManager.NavigateTo(ReturnUrl, forceLoad: true);
         }
         else
         {
-            Console.WriteLine("Invalid login attempt.");
+            errors.Add("Invalid login attempt. Please check your email and password.");
         }
     }
 }

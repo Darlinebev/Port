@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,6 @@ namespace DarlineBeverly.Data
 {
     public class Register : BaseModel
     {
-
         [Required]
         [Compare("Password", ErrorMessage = "Password and Confirm Password do not match.")]
         public string ConfirmPassword { get; set; }
@@ -20,12 +20,12 @@ namespace DarlineBeverly.Data
         [Required]
         public string Email { get; set; }
 
+        [Required]
         public string Password { get; set; }
-
-
     }
+
     public class Login : BaseModel
     {
-        public bool RememberMe { get; set; } 
-    }   
+        public bool RememberMe { get; set; }
+    }
 }
