@@ -1,22 +1,22 @@
 @page "/authentication/login"
+
 @using Microsoft.AspNetCore.Identity
-@using DarlineBeverly.Data @* replace with your actual namespace *@
+@using DarlineBeverly.Data
+@using System.ComponentModel.DataAnnotations
 @inject SignInManager<IdentityUser> SignInManager
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
-
-@using System.ComponentModel.DataAnnotations
-@inject SignInManager<IdentityUser> SignInManager
-
 
 <h3>Login</h3>
 
 @if (!string.IsNullOrEmpty(errorMessage))
 {
-    <div class="alert alert-danger">@errorMessage</div>
+    <div class="alert alert-@(loginSucceeded ? "success" : "danger")">
+        @errorMessage
+    </div>
 }
 
-<EditForm Model="@loginModel" OnValidSubmit="@HandleLogin" FormName="LoginForm">
+<EditForm Model="@loginModel" OnSubmit="@HandleLogin" FormName="LoginForm">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
@@ -43,9 +43,13 @@
 @code {
     private LoginModel loginModel = new();
     private string errorMessage = string.Empty;
+    private bool loginSucceeded = false;
 
     private async Task HandleLogin()
     {
+        errorMessage = string.Empty;
+        loginSucceeded = false;
+
         var result = await SignInManager.PasswordSignInAsync(
             loginModel.Email,
             loginModel.Password,
@@ -54,21 +58,18 @@
 
         if (result.Succeeded)
         {
+            loginSucceeded = true;
+            errorMessage = "✅ Login successful! Redirecting…";
             NavigationManager.NavigateTo("/");
-
-            
-        }
-        else if (result.IsLockedOut)
-        {
-            errorMessage = "This account is locked out. Please contact support.";
-        }
-        else if (result.RequiresTwoFactor)
-        {
-            errorMessage = "Two-factor authentication is required.";
         }
         else
         {
-            errorMessage = "Invalid login attempt.";
+            // Show detailed flags to debug why it failed
+            errorMessage = $"❌ Login failed. " +
+                           $"Succeeded: {result.Succeeded}, " +
+                           $"LockedOut: {result.IsLockedOut}, " +
+                           $"Requires2FA: {result.RequiresTwoFactor}, " +
+                           $"NotAllowed: {result.IsNotAllowed}";
         }
     }
 
