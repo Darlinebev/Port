@@ -1,11 +1,13 @@
+
+
 @page "/authentication/login"
 
 @using Microsoft.AspNetCore.Identity
 @using DarlineBeverly.Data
 @using System.ComponentModel.DataAnnotations
 @inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 @inject NavigationManager NavigationManager
-@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <h3>Login</h3>
 
@@ -16,20 +18,20 @@
     </div>
 }
 
-<EditForm Model="@loginModel" OnSubmit="@HandleLogin" FormName="LoginForm">
+<EditForm Model="@loginModel" OnValidSubmit="@HandleLogin" FormName="LoginForm">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
     <div class="mb-3">
         <label for="email" class="form-label">Email</label>
         <InputText id="email" class="form-control" @bind-Value="loginModel.Email" />
-        <ValidationMessage For="@(() => loginModel.Email)" />
+        <ValidationMessage For="()=>loginModel.Email" />
     </div>
 
     <div class="mb-3">
         <label for="password" class="form-label">Password</label>
         <InputText id="password" type="password" class="form-control" @bind-Value="loginModel.Password" />
-        <ValidationMessage For="@(() => loginModel.Password)" />
+        <ValidationMessage For="()=>loginModel.Password" />
     </div>
 
     <div class="form-check mb-3">
@@ -41,17 +43,35 @@
 </EditForm>
 
 @code {
-    private LoginModel loginModel = new();
+    [SupplyParameterFromForm(FormName = "LoginForm")]
+    private LoginModel loginModel { get; set; } = new();
+
     private string errorMessage = string.Empty;
     private bool loginSucceeded = false;
 
     private async Task HandleLogin()
     {
-        errorMessage = string.Empty;
-        loginSucceeded = false;
+        var user = await UserManager.FindByEmailAsync(loginModel.Email);
+        if (user == null)
+        {
+            errorMessage = "❌ No account found with that email.";
+            return;
+        }
+
+        if (!await UserManager.CheckPasswordAsync(user, loginModel.Password))
+        {
+            errorMessage = "❌ Incorrect password.";
+            return;
+        }
+
+        if (!user.EmailConfirmed)
+        {
+            errorMessage = "⚠️ Please confirm your email before logging in.";
+            return;
+        }
 
         var result = await SignInManager.PasswordSignInAsync(
-            loginModel.Email,
+            user.UserName,
             loginModel.Password,
             loginModel.RememberMe,
             lockoutOnFailure: false);
@@ -64,7 +84,6 @@
         }
         else
         {
-            // Show detailed flags to debug why it failed
             errorMessage = $"❌ Login failed. " +
                            $"Succeeded: {result.Succeeded}, " +
                            $"LockedOut: {result.IsLockedOut}, " +

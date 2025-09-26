@@ -8,11 +8,9 @@
             <a href ="/Projects">Projects</a>
             <a href ="/Blog">Blog</a>
             <a href ="/Contact">Contact</a>
-          
-               
-        </div>
 
-        <AuthorizeView>
+         
+           <AuthorizeView>
             <Authorized>
                 <div class="nav-item px3">              
                 <NavLink class="nav-link" href="authentication/logout">
@@ -33,10 +31,13 @@
                 </NavLink>
                 </div>
 
-
-
             </NotAuthorized>
         </AuthorizeView>
+      
+               
+        </div>
+
+       
 
         <article class="content px-4">
             @Body
