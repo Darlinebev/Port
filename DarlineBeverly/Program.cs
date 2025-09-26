@@ -1,11 +1,9 @@
+
 using DarlineBeverly.Data;
 using DarlineBeverly.Components;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,31 +11,24 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+// Use SQLite for persistence
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
-    builder.Services.AddCascadingAuthenticationState();
-    builder.Services.AddDefaultIdentity<IdentityUser>()
+// Add Identity (with default cookie scheme: Identity.Application)
+builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+    {
+        options.SignIn.RequireConfirmedAccount = false; // optional
+    })
     .AddEntityFrameworkStores<AppDbContext>();
 
-
-builder.Services.AddAuthentication(AuthConstant.Scheme)
-    .AddCookie(AuthConstant.Scheme, options =>
-    {
-        options.Cookie.Name = AuthConstant.CookieName;
-        options.LoginPath = "/authentication/login";
-        options.Cookie.HttpOnly = true;
-        options.ExpireTimeSpan = TimeSpan.FromDays(1);
-        options.SlidingExpiration = true;
-        
-    });
-
-
-
-
-
-
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/authentication/login";       // your login page
+    options.LogoutPath = "/authentication/logout";     // your logout page
+    options.AccessDeniedPath = "/authentication/access-denied"; // optional
+});
 
 var app = builder.Build();
 
@@ -48,16 +39,16 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseAuthentication();
-app.UseAuthorization(); 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseAntiforgery(); 
+app.UseRouting();
+
+app.UseAuthentication();  // must come before Authorization
+app.UseAuthorization();
+
+app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
-
-
-
 
 app.Run();

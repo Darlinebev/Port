@@ -1,108 +1,87 @@
 @page "/authentication/login"
-
 @using Microsoft.AspNetCore.Identity
-@using Microsoft.AspNetCore.Components.Authorization
-@using DarlineBeverly.Data
+@using DarlineBeverly.Data @* replace with your actual namespace *@
 @inject SignInManager<IdentityUser> SignInManager
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
+@using System.ComponentModel.DataAnnotations
+@inject SignInManager<IdentityUser> SignInManager
+
+
 <h3>Login</h3>
 
-@if (errors.Count > 0)
+@if (!string.IsNullOrEmpty(errorMessage))
 {
-    <div class="alert alert-danger mt-3">
-        <ul class="list-unstyled mb-0">
-            @foreach (var error in errors)
-            {
-                <li>@error</li>
-            }
-        </ul>
-    </div>
+    <div class="alert alert-danger">@errorMessage</div>
 }
 
-@if (isSuccessful)
-{
-    <div class="alert alert-success mt-3">
-        Login successful! Redirecting...
-    </div>
-}
-
-<EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
+<EditForm Model="@loginModel" OnValidSubmit="@HandleLogin" FormName="LoginForm">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <div class="form-group mt-2">
-        <label for="email">Enter Email Address</label>
-        <InputText id="email" class="form-control"
-                   Value="loginModel.Email"
-                   ValueChanged="@(e => loginModel.Email = e)"
-                   ValueExpression="() => loginModel.Email" />
-        <ValidationMessage For="() => loginModel.Email" />
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <InputText id="email" class="form-control" @bind-Value="loginModel.Email" />
+        <ValidationMessage For="@(() => loginModel.Email)" />
     </div>
 
-    <div class="form-group mt-2">
-        <label for="password">Enter Password</label>
-        <InputPassword id="password" class="form-control"
-                       Value="loginModel.Password"
-                       ValueChanged="@(e => loginModel.Password = e)"
-                       ValueExpression="() => loginModel.Password" />
-        <ValidationMessage For="() => loginModel.Password" />
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <InputText id="password" type="password" class="form-control" @bind-Value="loginModel.Password" />
+        <ValidationMessage For="@(() => loginModel.Password)" />
     </div>
 
-    <div class="form-group mt-2">
-        <div class="form-check">
-            <InputCheckbox id="rememberMe" class="form-check-input"
-                           Value="loginModel.RememberMe"
-                           ValueChanged="@(e => loginModel.RememberMe = e)"
-                           ValueExpression="() => loginModel.RememberMe" />
-            <label for="rememberMe" class="form-check-label">Remember Me</label>
-        </div>
+    <div class="form-check mb-3">
+        <InputCheckbox id="rememberMe" class="form-check-input" @bind-Value="loginModel.RememberMe" />
+        <label class="form-check-label" for="rememberMe">Remember Me</label>
     </div>
 
-    <button type="submit" class="btn btn-primary mt-3">Login</button>
+    <button type="submit" class="btn btn-primary">Login</button>
 </EditForm>
 
 @code {
-    public Login loginModel { get; set; } = new Login();
-
-    private List<string> errors = new();
-    private bool isSuccessful;
-    private string ReturnUrl { get; set; } = "/";
-
-    protected override async Task OnInitializedAsync()
-    {
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-
-        if (user.Identity?.IsAuthenticated == true)
-        {
-            NavigationManager.NavigateTo(ReturnUrl, forceLoad: true);
-        }
-    }
+    private LoginModel loginModel = new();
+    private string errorMessage = string.Empty;
 
     private async Task HandleLogin()
     {
-        errors.Clear();
-
         var result = await SignInManager.PasswordSignInAsync(
             loginModel.Email,
             loginModel.Password,
             loginModel.RememberMe,
-            lockoutOnFailure: false
-        );
+            lockoutOnFailure: false);
 
         if (result.Succeeded)
         {
-            isSuccessful = true;
-            await Task.Delay(1000);
-            NavigationManager.NavigateTo(ReturnUrl, forceLoad: true);
+            NavigationManager.NavigateTo("/");
+
+            
+        }
+        else if (result.IsLockedOut)
+        {
+            errorMessage = "This account is locked out. Please contact support.";
+        }
+        else if (result.RequiresTwoFactor)
+        {
+            errorMessage = "Two-factor authentication is required.";
         }
         else
         {
-            errors.Add("Invalid login attempt. Please check your email and password.");
+            errorMessage = "Invalid login attempt.";
         }
     }
+
+    public class LoginModel
+    {
+        [Required(ErrorMessage = "Email is required.")]
+        [EmailAddress(ErrorMessage = "Invalid email address.")]
+        public string Email { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Password is required.")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; } = string.Empty;
+
+        public bool RememberMe { get; set; } = false;
+    }
 }
-
-

@@ -4,14 +4,16 @@
 @using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
 
-@code{
-        [CascadingParameter]
-        public HttpContext Context { get; set; }
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        // Sign out the user (Identity will clear the cookie)
+        await SignInManager.SignOutAsync();
 
-        protected override async Task OnInitializedAsync()
-        {
-            await Context.SignOutAsync("AuthConstant.Scheme");
-            NavigationManager.NavigateTo("authentication/login");
-        }
+        // Redirect to login page
+        NavigationManager.NavigateTo("/authentication/login", forceLoad: true);
+    }
 }
