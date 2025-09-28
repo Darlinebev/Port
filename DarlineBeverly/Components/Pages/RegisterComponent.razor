@@ -63,7 +63,7 @@
         // Clear any previous errors before a new attempt.
         errors.Clear();
 
-        var user = new IdentityUser { UserName = registerModel.Email, Email = registerModel.Email };
+        var user = new IdentityUser { UserName = registerModel.Email, Email = registerModel.Email, EmailConfirmed = true };
         var result = await UserManager.CreateAsync(user, registerModel.Password);
 
         if(result.Succeeded)

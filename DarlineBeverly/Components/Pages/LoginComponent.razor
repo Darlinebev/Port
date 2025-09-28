@@ -1,5 +1,3 @@
-
-
 @page "/authentication/login"
 
 @using Microsoft.AspNetCore.Identity
@@ -51,12 +49,30 @@
 
     private async Task HandleLogin()
     {
-        var user = await UserManager.FindByEmailAsync(loginModel.Email);
-        if (user == null)
+        errorMessage = string.Empty;
+        loginSucceeded = false;
+
+        // Normalize email for SQLite compatibility
+        var normalizedEmail = UserManager.NormalizeEmail(loginModel.Email);
+
+        // Get all users with matching normalized email
+        var matchingUsers = UserManager.Users
+            .Where(u => u.NormalizedEmail == normalizedEmail)
+            .ToList();
+
+        if (matchingUsers.Count == 0)
         {
             errorMessage = "❌ No account found with that email.";
             return;
         }
+
+        if (matchingUsers.Count > 1)
+        {
+            errorMessage = "⚠️ Multiple accounts found with this email. Please contact support.";
+            return;
+        }
+
+        var user = matchingUsers.First();
 
         if (!await UserManager.CheckPasswordAsync(user, loginModel.Password))
         {
@@ -64,11 +80,6 @@
             return;
         }
 
-        if (!user.EmailConfirmed)
-        {
-            errorMessage = "⚠️ Please confirm your email before logging in.";
-            return;
-        }
 
         var result = await SignInManager.PasswordSignInAsync(
             user.UserName,
