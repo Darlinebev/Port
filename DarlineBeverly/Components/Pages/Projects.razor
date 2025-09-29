@@ -1,0 +1,114 @@
+@page "/projects"
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+@using DarlineBeverly.Components.Pages.ProjectsComponens
+@using Microsoft.AspNetCore.Components.Routing
+
+
+<div class="projects-page">
+    <h2>My Projects</h2>
+
+    <nav class="breadcrumb-nav">
+        <ul>
+            <li>
+                <button @onclick="() => SetCategory(ProjectCategory.GraphicsDesign)"
+                        class="@GetActiveClass(ProjectCategory.GraphicsDesign)">
+                    Graphics Design
+                </button>
+            </li>
+            <li>
+                <button @onclick="() => SetCategory(ProjectCategory.WebDesign)"
+                        class="@GetActiveClass(ProjectCategory.WebDesign)">
+                    Web Design
+                </button>
+            </li>
+            <li>
+                <button @onclick="() => SetCategory(ProjectCategory.WebDev)"
+                        class="@GetActiveClass(ProjectCategory.WebDev)">
+                    Web Development
+                </button>
+            </li>
+            <li>
+                <button @onclick="() => SetCategory(ProjectCategory.Research)"
+                        class="@GetActiveClass(ProjectCategory.Research)">
+                    Research
+                </button>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="project-content">
+        @switch (currentCategory)
+        {
+            case ProjectCategory.WebDesign:
+                <WebDesign />
+                break;
+
+            case ProjectCategory.GraphicsDesign:
+                <GraphicsDesign />
+                break;
+
+            case ProjectCategory.WebDev:
+                <WebDevelopment />
+                break;
+
+            case ProjectCategory.Research:
+                <TechnicalResearch/>
+                break;
+
+            default:
+                <p>This is the default view showing all projects.</p>
+                break;
+        }
+    </div>
+</div>
+
+@code {
+    public enum ProjectCategory { All, WebDesign, GraphicsDesign, WebDev, Research }
+
+    private ProjectCategory currentCategory = ProjectCategory.All;
+
+    private void SetCategory(ProjectCategory category)
+    {
+        currentCategory = category;
+    }
+
+    private string GetActiveClass(ProjectCategory category)
+    {
+        return currentCategory == category ? "active" : "";
+    }
+}
+
+<style>
+    /* Style for the mini navigation menu */
+    .breadcrumb-nav ul {
+        list-style: none; /* Removes bullet points */
+        padding: 0;
+        margin: 0;
+        display: flex; /* Aligns buttons horizontally */
+        gap: 10px; /* Adds space between buttons */
+    }
+
+    /* Base style for the buttons */
+    .breadcrumb-nav button {
+        display: block;
+        padding: 8px 16px;
+        background-color: #4CAF50; /* A shade of green */
+        color: white;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px; /* Rounded corners */
+        cursor: pointer;
+        transition: background-color 0.3s; /* Smooth color change on hover/active */
+    }
+
+    /* Style on hover */
+    .breadcrumb-nav button:hover {
+        background-color: #45a049; /* Slightly darker green on hover */
+    }
+
+    /* Active state styling */
+    .breadcrumb-nav .active {
+        background-color: #3e8e41; /* Darker green for the active button */
+        cursor: default; /* Change cursor to indicate it's not clickable */
+    }
+</style>

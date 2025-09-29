@@ -42,6 +42,26 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Mb2dvdXRDb21wb25lbnQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/workspaces/Port/DarlineBeverly/Components/Pages/Projects.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Qcm9qZWN0cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/Port/DarlineBeverly/Components/Pages/ProjectsComponens/GraphicsDesign.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Qcm9qZWN0c0NvbXBvbmVucy9HcmFwaGljc0Rlc2lnbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/Port/DarlineBeverly/Components/Pages/ProjectsComponens/TechnicalResearch.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Qcm9qZWN0c0NvbXBvbmVucy9UZWNobmljYWxSZXNlYXJjaC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/Port/DarlineBeverly/Components/Pages/ProjectsComponens/WebDesign.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Qcm9qZWN0c0NvbXBvbmVucy9XZWJEZXNpZ24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/Port/DarlineBeverly/Components/Pages/ProjectsComponens/WebDevelopment.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Qcm9qZWN0c0NvbXBvbmVucy9XZWJEZXZlbG9wbWVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/workspaces/Port/DarlineBeverly/Components/Pages/RegisterComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9SZWdpc3RlckNvbXBvbmVudC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
