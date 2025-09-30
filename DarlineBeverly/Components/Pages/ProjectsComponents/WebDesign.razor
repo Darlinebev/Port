@@ -1,0 +1,18 @@
+@page "/projects/web-design"
+
+@inject IJSRuntime JS
+
+<h2 style="text-align:center; margin-top:20px;">Web Design Projects</h2>
+
+<div id="webDesignGalleryRoot"></div>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("renderWebDesignGallery", "webDesignGalleryRoot");
+        }
+    }
+}
+

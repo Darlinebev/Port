@@ -4,6 +4,9 @@ using DarlineBeverly.Components;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
+using Microsoft.AspNetCore.Http;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +33,9 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/authentication/access-denied"; // optional
 });
 
+builder.Services.AddServerSideBlazor()
+       .AddCircuitOptions(o => o.DetailedErrors = true);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -38,6 +44,16 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
     app.UseHsts();
 }
+
+app.MapGet("/api/graphics-images", () =>
+{
+    var folderPath = Path.Combine(app.Environment.WebRootPath, "images", "graphics");
+    var files = Directory.GetFiles(folderPath)
+                         .Select(Path.GetFileName)           // just file names
+                         .Select(name => $"/images/graphics/{name}") // convert to URL
+                         .ToList();
+    return Results.Json(files);
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

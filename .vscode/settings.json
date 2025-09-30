@@ -1,3 +1,4 @@
 {
-    "dotnet.defaultSolution": "DarlineBeverly.sln"
+    "dotnet.defaultSolution": "DarlineBeverly.sln",
+    "remote.autoForwardPortsFallback": 0
 }

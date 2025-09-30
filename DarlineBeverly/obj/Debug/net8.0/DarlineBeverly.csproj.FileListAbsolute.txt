@@ -7,6 +7,10 @@
 /workspaces/Port/DarlineBeverly/bin/Debug/net8.0/DarlineBeverly.dll
 /workspaces/Port/DarlineBeverly/bin/Debug/net8.0/DarlineBeverly.pdb
 /workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Humanizer.dll
+/workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Microsoft.AspNetCore.Cryptography.Internal.dll
+/workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+/workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+/workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.UI.dll
 /workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Microsoft.Bcl.AsyncInterfaces.dll
 /workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Microsoft.CodeAnalysis.dll
 /workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Microsoft.CodeAnalysis.CSharp.dll
@@ -19,6 +23,10 @@
 /workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.Relational.dll
 /workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.Sqlite.dll
 /workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Microsoft.Extensions.DependencyModel.dll
+/workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Microsoft.Extensions.FileProviders.Embedded.dll
+/workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Microsoft.Extensions.Identity.Core.dll
+/workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Microsoft.Extensions.Identity.Stores.dll
+/workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Microsoft.Extensions.Options.dll
 /workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Mono.TextTemplating.dll
 /workspaces/Port/DarlineBeverly/bin/Debug/net8.0/SQLitePCLRaw.batteries_v2.dll
 /workspaces/Port/DarlineBeverly/bin/Debug/net8.0/SQLitePCLRaw.core.dll
@@ -106,6 +114,7 @@
 /workspaces/Port/DarlineBeverly/obj/Debug/net8.0/DarlineBeverly.AssemblyInfoInputs.cache
 /workspaces/Port/DarlineBeverly/obj/Debug/net8.0/DarlineBeverly.AssemblyInfo.cs
 /workspaces/Port/DarlineBeverly/obj/Debug/net8.0/DarlineBeverly.csproj.CoreCompileInputs.cache
+/workspaces/Port/DarlineBeverly/obj/Debug/net8.0/DarlineBeverly.MvcApplicationPartsAssemblyInfo.cs
 /workspaces/Port/DarlineBeverly/obj/Debug/net8.0/DarlineBeverly.MvcApplicationPartsAssemblyInfo.cache
 /workspaces/Port/DarlineBeverly/obj/Debug/net8.0/DarlineBeverly.sourcelink.json
 /workspaces/Port/DarlineBeverly/obj/Debug/net8.0/staticwebassets.build.json
@@ -124,12 +133,3 @@
 /workspaces/Port/DarlineBeverly/obj/Debug/net8.0/DarlineBeverly.pdb
 /workspaces/Port/DarlineBeverly/obj/Debug/net8.0/DarlineBeverly.genruntimeconfig.cache
 /workspaces/Port/DarlineBeverly/obj/Debug/net8.0/ref/DarlineBeverly.dll
-/workspaces/Port/DarlineBeverly/obj/Debug/net8.0/DarlineBeverly.MvcApplicationPartsAssemblyInfo.cs
-/workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Microsoft.AspNetCore.Cryptography.Internal.dll
-/workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
-/workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
-/workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.UI.dll
-/workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Microsoft.Extensions.FileProviders.Embedded.dll
-/workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Microsoft.Extensions.Identity.Core.dll
-/workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Microsoft.Extensions.Identity.Stores.dll
-/workspaces/Port/DarlineBeverly/bin/Debug/net8.0/Microsoft.Extensions.Options.dll

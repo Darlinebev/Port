@@ -25,6 +25,10 @@
       "PackagePath": "staticwebassets/bootstrap/bootstrap.min.css.map"
     },
     {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/css/webDesignGallery.css",
+      "PackagePath": "staticwebassets/css/webDesignGallery.css"
+    },
+    {
       "Id": "/workspaces/Port/DarlineBeverly/wwwroot/favicon.png",
       "PackagePath": "staticwebassets/favicon.png"
     },
@@ -81,6 +85,58 @@
       "PackagePath": "staticwebassets/images/graphics.jpg"
     },
     {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/graphics/GraphicsDesign.png",
+      "PackagePath": "staticwebassets/images/graphics/GraphicsDesign.png"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/graphics/TechnicalResearch.png",
+      "PackagePath": "staticwebassets/images/graphics/TechnicalResearch.png"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/graphics/UIDesign.png",
+      "PackagePath": "staticwebassets/images/graphics/UIDesign.png"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/graphics/atieno.jpg",
+      "PackagePath": "staticwebassets/images/graphics/atieno.jpg"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/graphics/atieno.png",
+      "PackagePath": "staticwebassets/images/graphics/atieno.png"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/graphics/atieno1.jpg",
+      "PackagePath": "staticwebassets/images/graphics/atieno1.jpg"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/graphics/atieno3.jpg",
+      "PackagePath": "staticwebassets/images/graphics/atieno3.jpg"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/graphics/background.jpg",
+      "PackagePath": "staticwebassets/images/graphics/background.jpg"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/graphics/banner1.jpg",
+      "PackagePath": "staticwebassets/images/graphics/banner1.jpg"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/graphics/banner2.jpg",
+      "PackagePath": "staticwebassets/images/graphics/banner2.jpg"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/graphics/graphics.jpg",
+      "PackagePath": "staticwebassets/images/graphics/graphics.jpg"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/graphics/research.jpg",
+      "PackagePath": "staticwebassets/images/graphics/research.jpg"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/graphics/uiux.jpg",
+      "PackagePath": "staticwebassets/images/graphics/uiux.jpg"
+    },
+    {
       "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/mypic.png",
       "PackagePath": "staticwebassets/images/mypic.png"
     },
@@ -97,8 +153,36 @@
       "PackagePath": "staticwebassets/images/uiux.jpg"
     },
     {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/webdesign/GraphicsDesign.png",
+      "PackagePath": "staticwebassets/images/webdesign/GraphicsDesign.png"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/webdesign/TechnicalResearch.png",
+      "PackagePath": "staticwebassets/images/webdesign/TechnicalResearch.png"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/webdesign/UIDesign.png",
+      "PackagePath": "staticwebassets/images/webdesign/UIDesign.png"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/webdesign/research.jpg",
+      "PackagePath": "staticwebassets/images/webdesign/research.jpg"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/images/webdesign/uiux.jpg",
+      "PackagePath": "staticwebassets/images/webdesign/uiux.jpg"
+    },
+    {
       "Id": "/workspaces/Port/DarlineBeverly/wwwroot/js/InfiniteScroll.js",
       "PackagePath": "staticwebassets/js/InfiniteScroll.js"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/js/reactGallery.js",
+      "PackagePath": "staticwebassets/js/reactGallery.js"
+    },
+    {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/js/webDesignGallery.js",
+      "PackagePath": "staticwebassets/js/webDesignGallery.js"
     },
     {
       "Id": "obj/Debug/net8.0/staticwebassets/msbuild.DarlineBeverly.Microsoft.AspNetCore.StaticWebAssets.props",

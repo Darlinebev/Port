@@ -46,20 +46,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Qcm9qZWN0cy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/workspaces/Port/DarlineBeverly/Components/Pages/ProjectsComponens/GraphicsDesign.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Qcm9qZWN0c0NvbXBvbmVucy9HcmFwaGljc0Rlc2lnbi5yYXpvcg==
+[/workspaces/Port/DarlineBeverly/Components/Pages/ProjectsComponents/GraphicsDesign.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Qcm9qZWN0c0NvbXBvbmVudHMvR3JhcGhpY3NEZXNpZ24ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/workspaces/Port/DarlineBeverly/Components/Pages/ProjectsComponens/TechnicalResearch.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Qcm9qZWN0c0NvbXBvbmVucy9UZWNobmljYWxSZXNlYXJjaC5yYXpvcg==
+[/workspaces/Port/DarlineBeverly/Components/Pages/ProjectsComponents/TechnicalResearch.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Qcm9qZWN0c0NvbXBvbmVudHMvVGVjaG5pY2FsUmVzZWFyY2gucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/workspaces/Port/DarlineBeverly/Components/Pages/ProjectsComponens/WebDesign.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Qcm9qZWN0c0NvbXBvbmVucy9XZWJEZXNpZ24ucmF6b3I=
+[/workspaces/Port/DarlineBeverly/Components/Pages/ProjectsComponents/WebDesign.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Qcm9qZWN0c0NvbXBvbmVudHMvV2ViRGVzaWduLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/workspaces/Port/DarlineBeverly/Components/Pages/ProjectsComponens/WebDevelopment.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Qcm9qZWN0c0NvbXBvbmVucy9XZWJEZXZlbG9wbWVudC5yYXpvcg==
+[/workspaces/Port/DarlineBeverly/Components/Pages/ProjectsComponents/WebDevelopment.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Qcm9qZWN0c0NvbXBvbmVudHMvV2ViRGV2ZWxvcG1lbnQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/workspaces/Port/DarlineBeverly/Components/Pages/RegisterComponent.razor]

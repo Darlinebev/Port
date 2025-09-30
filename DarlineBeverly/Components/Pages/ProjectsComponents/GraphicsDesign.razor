@@ -1,0 +1,15 @@
+@page "/projects/graphics-design"
+
+@inject IJSRuntime JS
+
+<div id="react-gallery-root"></div>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("reactInterop.renderGallery", "react-gallery-root");
+        }
+    }
+}
