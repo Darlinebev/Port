@@ -1,0 +1,272 @@
+@page "/blog"
+
+@using DarlineBeverly.Data
+
+<h2 class="page-title">Our Blog</h2>
+
+<div class="blog-grid">
+    @foreach (var post in BlogPosts)
+    {
+        <!-- Clickable area for the card -->
+        <div class="blog-card">
+            <img src="@post.ImageUrl" alt="@post.Title" />
+            
+            <div class="content-wrapper">
+                <h3>@post.Title</h3>
+                <p>@post.Snippet</p>
+                <!-- Only the button/link is now clickable to open the PDF -->
+                <a class="read-more-link" @onclick="() => OpenDrawer(post)">Read Full Document</a>
+            </div>
+        </div>
+    }
+</div>
+
+@if (IsDrawerOpen && SelectedPost != null)
+{
+    <!-- Backdrop to close the drawer -->
+    <div class="drawer-backdrop" @onclick="CloseDrawer"></div>
+
+    <!-- Drawer container -->
+    <div class="drawer">
+        <div class="drawer-header">
+            <h2>@SelectedPost.Title</h2>
+            <button class="close-btn" @onclick="CloseDrawer">×</button>
+        </div>
+        
+        <!-- Iframe for scrollable PDF view -->
+        <div class="pdf-viewer">
+            <!-- Note: The PDF file must exist in your wwwroot folder for this to work -->
+            <iframe src="@SelectedPost.PdfUrl" title="PDF Viewer: @SelectedPost.Title"></iframe>
+        </div>
+    </div>
+}
+
+@code {
+    // Mock class for demonstration since DarlineBeverly.Data is not available
+    public class BlogPost
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Snippet { get; set; }
+        public string ImageUrl { get; set; }
+        public string PdfUrl { get; set; }
+    }
+    
+    private List<BlogPost> BlogPosts = new();
+    private BlogPost? SelectedPost;
+    private bool IsDrawerOpen = false;
+
+    protected override void OnInitialized()
+    {
+        BlogPosts = new()
+        {
+            new BlogPost
+            {
+                Id = 1,
+                Title = "Getting Started with Blazor",
+                Snippet = "Learn the basics of building interactive UIs with Blazor Web Apps, focusing on component interaction and routing.",
+                ImageUrl = "https://placehold.co/150x150/0f766e/ffffff?text=BLAZOR",
+                // Assuming this PDF exists in wwwroot
+                PdfUrl = "/Darline-Beverly-CV.pdf"
+               
+            },
+            new BlogPost
+            {
+                Id = 2,
+                Title = "Designing with Figma",
+                Snippet = "A quick guide to creating clean, professional UI layouts and generating design system components in Figma efficiently.",
+                ImageUrl = "https://placehold.co/150x150/1e293b/ffffff?text=FIGMA",
+                PdfUrl = "/Darline-Beverly-CV.pdf"
+            },
+            new BlogPost
+            {
+                Id = 3,
+                Title = "Advanced CSS Grid Layouts",
+                Snippet = "Explore modern CSS Grid techniques to build complex, responsive page layouts without relying on float or absolute positioning.",
+                ImageUrl = "https://placehold.co/150x150/94a3b8/ffffff?text=CSS",
+                PdfUrl = "/Darline-Beverly-CV.pdf"
+            }
+        };
+    }
+
+    void OpenDrawer(BlogPost post)
+    {
+        SelectedPost = post;
+        IsDrawerOpen = true;
+        // FIX: Explicitly call StateHasChanged() to ensure the UI updates immediately
+        StateHasChanged(); 
+    }
+
+    void CloseDrawer()
+    {
+        IsDrawerOpen = false;
+        SelectedPost = null;
+        StateHasChanged(); // Added for consistency, although less critical for closing
+    }
+}
+
+<style>
+/* Global Styling */
+.page-title {
+    text-align: center;
+    margin: 30px 0;
+    font-weight: 700;
+    font-size: 2.2rem;
+    color: #1f2937;
+}
+
+/* Horizontal Grid Setup (One card per row) */
+.blog-grid {
+    display: flex;
+    flex-direction: column; /* Stacks cards vertically */
+    gap: 20px;
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto; /* Centers the whole grid */
+}
+
+/* Horizontal Card */
+.blog-card {
+    display: flex; /* Makes content horizontal */
+    align-items: center; /* Vertically aligns image and text */
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: box-shadow 0.3s;
+    overflow: hidden;
+}
+.blog-card:hover {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.blog-card img {
+    width: 150px; /* Fixed width for the image */
+    height: 150px; /* Fixed height for the image */
+    object-fit: cover;
+    flex-shrink: 0; /* Prevents image from shrinking */
+}
+
+.content-wrapper {
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.blog-card h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.4rem;
+    color: #1f2937;
+}
+
+.blog-card p {
+    margin: 0 0 10px 0;
+    font-size: 1rem;
+    color: #4b5563;
+    line-height: 1.4;
+}
+
+/* Read More Link Styling */
+.read-more-link {
+    display: inline-block;
+    padding: 8px 16px;
+    background: #0078d4;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+    align-self: flex-start; /* Aligns link to the start of the card content */
+}
+.read-more-link:hover {
+    background: #005a9e;
+}
+
+/* Drawer Styling */
+.drawer-backdrop {
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.6);
+    z-index: 999;
+}
+
+.drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    /* Use responsive width instead of fixed px */
+    width: clamp(300px, 90vw, 700px); 
+    height: 100%;
+    background: #f9fafb;
+    box-shadow: -4px 0 15px rgba(0,0,0,0.4);
+    z-index: 1000;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Prevent drawer content from spilling out */
+}
+
+.drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    flex-shrink: 0; /* Prevents header from shrinking */
+}
+
+.drawer-header h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #1f2937;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    font-weight: 300;
+    cursor: pointer;
+    line-height: 1;
+    color: #4b5563;
+    transition: color 0.2s;
+}
+.close-btn:hover {
+    color: #dc2626;
+}
+
+/* PDF Viewer Container */
+.pdf-viewer {
+    flex-grow: 1; /* Allows the viewer to take up all remaining space */
+    overflow: hidden; /* Ensures the iframe is contained */
+}
+
+.pdf-viewer iframe {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    /* The iframe itself provides the necessary scrolling for the PDF content */
+}
+
+/* Mobile Responsiveness for Cards */
+@@media (max-width: 600px) {
+    .blog-card {
+        flex-direction: column; /* Stack image and content vertically on small screens */
+        align-items: flex-start;
+    }
+    .blog-card img {
+        width: 100%;
+        height: 200px;
+        border-radius: 12px 12px 0 0;
+    }
+    .content-wrapper {
+        padding: 15px;
+    }
+}
+</style>

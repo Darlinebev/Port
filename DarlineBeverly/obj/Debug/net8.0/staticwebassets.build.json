@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "0JiBUO+7nYBU8cvNPwO4caUwdxcMAt9PQmym/uc9eAU=",
+  "Hash": "lNQ5JszLVZo68AzVRTuzy8htM79zQ/Q9t5kEpGdadSs=",
   "Source": "DarlineBeverly",
   "BasePath": "_content/DarlineBeverly",
   "Mode": "Default",
@@ -2048,6 +2048,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/js/webDesignGallery.js"
+    },
+    {
+      "Identity": "/workspaces/Port/DarlineBeverly/wwwroot/style.css",
+      "SourceId": "DarlineBeverly",
+      "SourceType": "Discovered",
+      "ContentRoot": "/workspaces/Port/DarlineBeverly/wwwroot/",
+      "BasePath": "_content/DarlineBeverly",
+      "RelativePath": "style.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/style.css"
     }
   ]
 }

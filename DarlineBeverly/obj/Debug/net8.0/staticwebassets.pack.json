@@ -185,6 +185,10 @@
       "PackagePath": "staticwebassets/js/webDesignGallery.js"
     },
     {
+      "Id": "/workspaces/Port/DarlineBeverly/wwwroot/style.css",
+      "PackagePath": "staticwebassets/style.css"
+    },
+    {
       "Id": "obj/Debug/net8.0/staticwebassets/msbuild.DarlineBeverly.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

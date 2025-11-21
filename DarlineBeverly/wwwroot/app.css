@@ -49,3 +49,186 @@ h1:focus {
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
 }
+
+
+
+
+
+:root {
+    --color-background: #020617; /* slate-950 */
+    --color-text-light: #f1f5f9; /* slate-100 */
+    --color-text-subtle: #94a3b8; /* slate-400 */
+    --color-green: #4ade80; /* green-400 */
+    --color-border: #52525b; /* zinc-600 */
+}
+
+/* Reset for a better look in plain CSS */
+body {
+    background-color: var(--color-background);
+    color: var(--color-text-light);
+    font-family: sans-serif;
+    margin: 0;
+}
+
+/* 1. Hero Section Container */
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* h-screen */
+    gap: 2rem; /* gap-8 */
+    padding: 6rem 1rem 8rem 1rem; /* pt-24 pb-32, with horizontal padding */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@media (min-width: 640px) { /* sm:justify-center */
+    .hero-section {
+        justify-content: center;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+/* 2. Available Tag */
+.available-tag {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    gap: 0.75rem; /* gap-3 */
+    padding: 0.375rem 1rem 0.375rem 0.75rem; /* py-1.5 pl-3 pr-4 */
+    border-radius: 9999px; /* rounded-full */
+    border: 1px solid rgba(82, 82, 91, 0.75); /* border-zinc-600/75 */
+    background-color: rgba(2, 6, 23, 0.25); /* bg-slate-950/25 */
+    backdrop-filter: blur(4px); /* A little extra for the 'frosted' look */
+}
+
+.status-indicator {
+    position: relative;
+    width: 0.75rem; /* size-3 */
+    height: 0.75rem; /* size-3 */
+}
+
+.dot-solid, .dot-ping {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.dot-ping {
+    background-color: var(--color-green);
+    opacity: 0.65;
+    animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.dot-solid {
+    background-color: var(--color-green);
+    box-shadow: 0 0 8px var(--color-green); /* drop-shadow-green equivalent */
+}
+
+.status-text {
+    font-size: 0.875rem; /* text-sm */
+    color: var(--color-text-light);
+    margin: 0;
+}
+
+/* 3. Introduction Headings */
+.main-heading {
+    /* clamp(2rem, 7vw, 3rem) */
+    font-size: clamp(2rem, 7vw, 3rem);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.025em; /* tracking-tight */
+    margin: 0;
+}
+
+.sub-heading {
+    font-size: 1rem;
+    line-height: 1.625; /* leading-relaxed */
+    color: var(--color-text-subtle);
+    max-width: 48rem; /* max-w-xl */
+    margin-bottom: 2rem; /* mb-8 */
+    margin-top: 0;
+}
+
+@media (max-width: 640px) { /* max-sm:text-sm */
+    .sub-heading {
+        font-size: 0.875rem; /* text-sm */
+    }
+}
+
+/* 4. Social Links (Keyboard Style) */
+.social-board {
+    display: flex;
+    align-items: flex-start;
+    text-align: center;
+    gap: 0.5rem; /* Add some space between keys */
+}
+
+@media (max-width: 400px) { /* max-xs:flex-col */
+    .social-board {
+        flex-direction: column;
+        align-items: center;
+    }
+    .cta-container {
+        width: 100%;
+        margin-top: 1rem;
+    }
+}
+
+.key-link {
+    /* Styles for the 'key' class */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem; /* Small keys */
+    height: 3rem;
+    border-radius: 0.5rem;
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-light);
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.key-link:hover {
+    background-color: var(--color-border);
+}
+
+.key-link svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+/* 5. Call-to-Action Button */
+.call-to-action {
+    /* Styles for the 'call-to-action' class */
+    width: auto; /* Override fixed width */
+    padding: 0 1.5rem;
+    background-color: var(--color-green);
+    border-color: var(--color-green);
+    color: var(--color-background) !important;
+}
+
+.call-to-action:hover {
+    background-color: var(--color-green);
+    opacity: 0.85;
+}
+
+.call-to-action-content {
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+/* Ping Animation */
+@keyframes ping {
+    0% {
+        transform: scale(1);
+        opacity: 0.65;
+    }
+    100% {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
